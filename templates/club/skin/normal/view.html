@@ -1,0 +1,174 @@
+{%  extends 'base.html' %}
+{%  block title %} 덕스클럽 {% endblock %}
+{%  block external %}
+<!-- 	<link rel="stylesheet" type="text/css" href="/stylesheet/club.css" /> -->
+    <link href="/script/smarteditor/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheet/comment.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/script/board.js"></script>
+	<script type="text/javascript" src="/script/smarteditor/js/HuskyEZCreator.js"></script>
+{% endblock %}
+{%   block content %}
+{{ ("club." + code)|get_lnb() }}
+
+{% include '/club/club_title.html' %}
+
+<div id="page_body">
+	<div class="main_body">
+		<fieldset class="post_view">
+		<dl>
+			<dt class="title"></dt>
+			<dd class="title"><strong class="event_bold">{{ post.title }}</strong></dd>
+			<dt class="sub"></dt>
+			<dd class="sub">
+				<span class="left" style="width:250px;">
+				  <!-- AddThis Button BEGIN -->
+				  <div class="addthis_toolbox addthis_default_style " addthis:url="https://inthe-movie.com/club/{{ code }}/post/{{ post.id }}"
+				         addthis:title="{{ post.title }}">
+					 <a class="addthis_button_preferred_1"></a>
+					 <a class="addthis_button_preferred_2"></a>
+					 <a class="addthis_button_preferred_3"></a>
+					 <a class="addthis_button_preferred_4"></a>
+					 <a class="addthis_button_compact"></a>
+					 <a class="addthis_counter addthis_bubble_style"></a>
+				 </div>
+				 <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+				 <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dfc0aa00168e545"></script>
+				 <!-- AddThis Button END -->
+				</span>
+			
+			<dl class="board_info">
+					<dt>글쓴이 : </dt>
+					<dd>{{ post.user.nick_name }}</dd>
+					<dt>날짜 : </dt>
+					<dd>{{ post.reg_date|datetimeformat('%Y.%m.%d') }}</dd>
+					<dt>조회 : </dt>
+					<dd>{{ post.readed_count }}</dd>
+				</dl>
+			</dd>
+			
+			<dt class="text_wrap"></dt>
+			<dd class="text_wrap">{{ post.content|getTarget() }}</dd>
+			<dt class="button_wrap"></dt>
+			<dd class="button_wrap">
+				<div class="share_table_button">
+					<span class="left bt_align">
+						<span class="btn_pack medium icon">
+							<span class="list"></span>
+							<a href="/club/{{ code }}/" >목록</a>
+						</span>
+						{% if next_post %}
+						<span class="btn_pack medium icon">
+							<span class="up"></span>
+							<a href="/club/{{ code }}/post/{{ next_post[0].id }}" >위글</a>
+						</span>
+						{% endif %}
+						{% if prev_post %}
+						<span class="btn_pack medium icon">
+							<span class="down"></span>
+							<a href="/club/{{ code }}/post/{{ prev_post[0].id }}" >아랫글</a>
+						</span>
+						{% endif %}
+<!-- 						<input type="button" class="share_list icon black_border" onclick="window.history.go(-1);" /> -->
+<!-- 						{% if next_post %}<input type="button" class="bt_up icon black_border" onclick="document.location.href='/club/{{ code }}/post/{{ next_post[0].id }}';" />{% endif %} -->
+<!-- 						{% if prev_post %}<input type="button" class="bt_down icon black_border" onclick="document.location.href='/club/{{ code }}/post/{{ prev_post[0].id }}';" />{% endif %} -->
+						
+					</span>
+					<span class="right bt_margin">
+						{% if session.user_id == post.user.user_id or session.is_admin == 'yes'  %}
+							<span class="btn_pack medium icon">
+								<span class="delete"></span>
+								<a href="/club/{{ code }}/delete/{{ post.id }}" >삭제</a>
+							</span>
+							<span class="btn_pack medium icon">
+								<span class="modify"></span>
+								<a href="/club/{{ code }}/edit/{{ post.id }}" >수정하기</a>
+							</span>
+						{% endif %}
+							
+						{% if session.user_id %}
+							<span class="btn_pack medium icon">
+								<span class="add"></span>
+								<a href="/club/{{ code }}/post" >글쓰기</a>
+							</span>
+						{% endif %}
+					</span>		
+				</div>	
+				<div class="clear">
+				</div>
+			</dd>
+			<dt class="comment_wrap">덧글</dt>
+			<dd class="comment_wrap ">
+							
+			{% if session.user_id %}
+			<div class="cb_module cb_fluid">
+				<!-- Comment Input Area -->
+				<div class="cb_wrt cb_wrt_default">
+					<div class="cb_wrt_box">
+						<div class="cb_wrt_box2">
+						<form action="" method="post" id="comment_form">
+							<input type="hidden" name="code" id="code" value="{{ code }}" />
+							<input type="hidden" name="idx" id="idx" value="{{ post.id }}" />
+						<fieldset>
+						<legend>댓글 등록 폼</legend>
+							<div class="cb_usr_area">
+								<div class="cb_txt_area">
+									<!-- 유동형 덧글 입력상자 -->
+									<table cellspacing="0" border="1" class="cb_section">
+									<caption>덧글 입력박스</caption>
+									<col><col width="90">
+									<thead>
+									<tr>
+									<th colspan="2" scope="col">유동형 덧글모듈</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+									<td>
+										<textarea cols="80" rows="20" id="comment_content" name="content"></textarea>
+									</td>
+									<td class="cb_btn_area">
+										<input type="image" id="comment_submit" src="http://static.naver.com/common/comment/btn_registry.gif" alt="등록">
+									</td>
+									</tr>
+									<tr>
+									<td>
+										<div class="cb_dsc_area" style="padding:3px 0px 2px"></div>
+									</td>
+									<td></td>
+									</tr>
+									</tbody>
+									</table>
+									<!-- //유동형 덧글 입력상자 -->											
+								</div>
+							</div>
+						</fieldset>
+						</form>
+						</div>
+					</div>
+				</div>
+				<!-- //Comment Input Area -->
+			</div>
+			<!-- //Content -->
+
+			{% endif %}
+			</dd>
+			<dt class="comment_list_wrap">댓글 리스트</dt>
+			<dd class="comment_list_wrap">
+			<div id="comment_list" style="clear:both;margin-bottom:30px;"></div>
+			</dd>
+			
+			
+		</dl>
+		</fieldset>
+		<div class="clear"></div>
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	
+	<div class="clear">
+	</div>
+	
+	
+</div>
+
+{% include '/club/common/comment_js.html' %}
+{%  endblock %}

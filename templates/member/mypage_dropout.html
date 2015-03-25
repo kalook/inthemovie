@@ -1,0 +1,71 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 회원정보 {% endblock %}
+{%  block content %}
+
+{{ "member.drop" | get_lnb(session) }}
+
+<h1 class="page_title">
+</h1>
+<div id="page_body">
+	<div class="main_body">
+
+		<form name="dropout_form" id="dropout_form" method="post" action="." onsubmit="return confirm_dropout()">
+		
+			<div class="gray_border join_textarea" style="width:650px; margin:0">
+				<h2>회원탈퇴</h2>
+				<textarea readonly style="width:100%">
+				
+	회원탈퇴는 회원님의 모든 정보가 삭제 됩니다.
+	회원 정보는 개인정보취급방침 6조에 의거해서 삭제 처리 됩니다.
+	탈퇴후 재가입 가능합니다.
+				</textarea>
+				
+				<span><input type="checkbox" name="dropout_confirm" id="dropout_confirm" /></span>
+				<span>탈퇴에 관한 글을 읽었으며 내용에 동의합니다.</span>
+			
+			</div>			
+			<p id="button" class="tCenter" >
+				<input type="submit" class="bt_dropout icon" value=""/>
+			</p>		
+		</form>
+	</div>
+
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+
+</div>
+
+
+
+<!-- <div class="mypage_join"> -->
+<!-- 	<form name="dropout_form" id="dropout_form" method="post" action="."  onsubmit="return confirm_dropout()"> -->
+<!-- 	<div class="dropout_form_wrap"> -->
+<!-- 		<dl> -->
+<!-- 			<dt><strong>회원탈퇴</strong></dt> -->
+<!-- 			<dd><textarea>회원탈퇴는 회원님의 모든 정보가 삭제 됩니다. -->
+<!-- 회원 정보는 개인정보취급방침 6조에 의거해서 삭제 처리 됩니다. -->
+
+<!-- 탈퇴후 재가입 가능합니다.</textarea></dd> -->
+<!-- 			<dd class="dropout_check"><input type="checkbox" name="dropout_confirm" id="dropout_confirm" /><span>탈퇴에 관한 글을 읽었으며 내용에 동의합니다.</span></dd> -->
+<!-- 			<dd class="dropout_bt_wrap"><input type="submit" value="회원탈퇴" class="bt_dropout icon"/></dd> -->
+<!-- 		</dl> -->
+<!-- 	</div> -->
+<!-- 	</form> -->
+<!-- </div> -->
+<script type="text/javascript">
+	function confirm_dropout() {
+		if($('#dropout_confirm').is(':checked') != true) {
+			alert('탈퇴에 관한 내용에 동의해주세요.');
+			$('#dropout_confirm').focus();
+			return false;
+		}
+		alert('탈퇴처리가 정상적으로 완료되었습니다.');
+		return true;		
+	}
+</script>
+{%  endblock %}
+
+
+
+

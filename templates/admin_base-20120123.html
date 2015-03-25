@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>inthe-movie.com :: {% block title %}{% endblock %} </title>
+    <link rel="stylesheet" type="text/css" href="/stylesheet/common.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<!-- 배너관련 달력 추가 -->
+	 <link rel="stylesheet" type="text/css" href="http://jqueryui.com/themes/base/jquery.ui.all.css" /> 
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="/javascript/jquery-1.6.4.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="/javascript/common.js"></script>
+	<script type="text/javascript" src="http://jqueryui.com/ui/jquery.ui.core.js"></script> 
+	<script type="text/javascript" src="http://jqueryui.com/ui/jquery.ui.widget.js"></script> 
+	<script type="text/javascript" src="http://jqueryui.com/ui/jquery.ui.datepicker.js"></script> 
+    <script type="text/javascript">
+      
+        
+        jQuery(function($) {
+				$('.datepicker')
+				.datepicker({
+					dateFormat:'yy-mm-dd', 
+					showAnim:'fadeIn', // show|slideDown|fadeIn
+					changeYear:true,
+					showOtherMonths:true,
+					changeMonth:true
+				});
+		});
+    </script>
+	<!-- 배너 끝 -->
+	{% block external %}{% endblock %}
+</head>
+<body>
+ <div id="wrap">
+ <div id="admin_header">
+ <a href="/"><span id="logo">intheMOVIE</span></a>
+	<ul id="header_member" >
+	{% if session.user_id %}
+		<li class="login_name">{{ session.nick_name }} 님</li>
+		<li class="top_small_slider"></li>
+		<li id="mypage"><a href="/user/{{ session.user_id }}">마이페이지</a></li>
+		<li class="top_small_slider"></li>
+		<li id="logout"><a href="/logout">로그아웃</a></li>
+	{% else %}
+		<li id="login"><a href="/login?url={{ request.META['PATH_INFO']|urlencode }}">로그인</a></li>
+		<li class="top_small_slider"></li>
+		<li id="id_pass_search"><a href="/find"></a></li>
+		<li class="top_small_slider"></li>
+		<li id="join"><a href="/join"></a></li>	
+	{% endif %}
+	</ul>
+	
+	<ul id="header_menu" class="header_mod" style="font-size:12px;">
+        <ul style="color:#000000;text-indent:0px;">
+            <li><a href="/inthe-movie/admin/member/">회원관리</a></li>
+			<li><a href="/inthe-movie/admin/email/">메일발송</a></li>
+			<li><a href="/inthe-movie/admin/hotmovie/">핫무비관리</a></li>
+            <li><a href="/inthe-movie/admin/event/">이벤트관리</a></li>
+			<li><a href="/inthe-movie/admin/club/">게시판관리</a></li>
+            <li><a href="/inthe-movie/admin/ad/">광고관리</a></li>
+        </ul>		
+	<ul>
+ </div>
+ <div id="header_bar"></div>
+ <div id="main">
+	 {% block content %}{% endblock %}
+ </div>
+ <div id="footer">
+ <div id="footer_bar"></div>
+	<ul id="footer_link"> 
+		<li id="footer_inthemovie_info"><a href="#">intheMovie소개</a></li>
+		<li id="footer_slider"></li>
+		<li id="footer_individual_information"><a href="">개인정보취급방침</a></li>
+		<li id="footer_slider"></li>
+		<li id="footer_use_information"><a href="#">이용약관</a></li>
+		<li id="footer_slider"></li>
+		<li id="footer_advertice"><a href="#">광고 및 제휴안내</a></li>
+	</ul>
+ <div id="footer_copyright" name="footer_copyright"><span>Copyright ⓒ inthemovie co LTD. ALL RIGHTS RESERVED</span></div>
+ </div> 
+</div>
+ </body>
+</html>

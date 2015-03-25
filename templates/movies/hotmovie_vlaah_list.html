@@ -1,0 +1,127 @@
+<!--{% for list in comment_list %}
+{% if post %}
+	{% if loop.index == 1 %}
+<input type="hidden" id="top_id" name="top_id" value="{{ list.id }}" />
+	{% endif %}
+{% endif %}
+<div class="comment_list">
+	<hr size="1" class="comment_line" color="#cfcfcf"/>
+	<dl>
+		<dt><a href="{{ list.link }}" target="_blank">{% if list.profile_image %}
+		<img src="{{ list.profile_image }}" alt="myphoto_me2day" style="width:60px;height:60px;" class="myphoto" />
+		{% else %}
+		<img src="/images/mypic_me2day.png" alt="myphoto_me2day" class="myphoto" />
+		{% endif %}</a></dt>
+		<dd class="comment_info">
+			<a href="{{ list.link }}" target="_blank"><img src="/images/comment_{{ list.service }}.png" alt="{{ list.service }}" /></a>
+			<span class="social_comment_name">{{ list.username }} </span>
+			<span class="social_comment_day">{{ list.create_date }}</span>	
+		</dd>
+		<dd class="comment_text">
+			<p>{{ list.content }}</p>
+		</dd>
+	</dl>
+</div>
+{% if loop.index == 20 %}
+<hr size="1" class="comment_line" color="#cfcfcf"/>
+<div class="comment_more" id="{{ list.id }}">
+	<a href="#" id="read_more">+ 더보기 </a>
+</div>	
+{% endif %}
+{% endfor %}
+{% for list in twitter_list if  20-comment_number %}
+				<div class="comment_list">
+					<hr size="1" class="comment_line" color="#cfcfcf"/>
+					<dl>
+						<dt>
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank">{% if list.get('profile_image_url') %}
+							<img src="{{ list.get('profile_image_url') }}" alt="myphoto_twitter" style="width:60px;height:60px;" class="myphoto" />
+							{% else %}
+							<img src="/images/mypic_twitter.png" alt="myphoto_twitter" class="myphoto" />
+							{% endif %}</a>
+						</dt>
+						<dd class="comment_info">
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+							<span class="social_comment_name">{{ list.get('from_user') }} </span>
+							<span class="social_comment_day">{{ list.get('created_at') }}</span>	
+						</dd>
+						<dd class="comment_text">
+							<p>{{ list.get('text')|create_id_link()|create_link() }}</p>
+						</dd>
+					</dl>
+				</div>
+			{% endfor %}
+			-->
+{% for list in comment_list %}
+{% if post %}
+	{% if loop.index == 1 %}
+<input type="hidden" id="top_id" name="top_id" value="{{ list.id }}" />
+	{% endif %}
+{% endif %}
+			
+			<li class="cb_thumb_on">
+				<div class="cb_thumb" id="social_photo_image">
+				<a href="{{ list.link }}" target="_blank">
+				{% if list.profile_image %}
+					<img src="{{ list.profile_image }}"  alt="썸네일" class="myphoto">
+				{% else %}
+					<img src="/images/mypic_me2day.png" alt="myphoto_me2day" class="myphoto" />
+				{% endif %}
+				</a>
+				</div>
+				<div class="cb_comment_area">
+					<div class="cb_info_area">
+						<div class="cb_section">
+							<a href="{{ list.link }}" target="_blank"><img src="/images/comment_{{ list.service }}.png" alt="{{ list.service }}" /></a>
+							<span class="cb_nick_name cb_nick_name2">{{ list.username }}</span>
+							<span class="cb_date">{{ list.create_date }}</span>
+						</div>
+						
+					</div>
+					<div class="cb_dsc_comment">
+						<p class="cb_dsc">
+							{{ list.content }}
+						</p>
+					</div>
+					
+				</div>
+			</li>
+
+			{% if loop.index == 20 %}				
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<div class="comment_more" id="{{ list.id }}">
+					<a href="#" id="read_more">+ 더보기 </a>
+				</div>	
+				{% endif %}
+			<input type="hidden" id="top_id" name="top_id" value="0" />
+
+			{% endfor %}
+			{% for list in twitter_list if  20-comment_number %}
+			<li class="cb_thumb_on">
+				<div class="cb_thumb" id="social_photo_image">
+					<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank">
+					{% if list.get('profile_image_url') %}
+					<img src="{{ list.get('profile_image_url') }}" alt="myphoto_twitter" class="myphoto" />
+					{% else %}
+					<img src="/images/mypic_twitter.png" alt="myphoto_twitter" class="myphoto" />
+					{% endif %}</a>
+				</div>
+				<div class="cb_comment_area">
+					<div class="cb_info_area">
+						<div class="cb_section">
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+							<span class="cb_nick_name cb_nick_name2">{{ list.get('from_user') }}</span>
+							<span class="cb_date">{{ list.get('created_at') }}</span>
+						</div>
+						
+					</div>
+					<div class="cb_dsc_comment">
+						<p class="cb_dsc">
+							{{ list.get('text')|create_id_link()|create_link() }}
+						</p>
+					</div>
+				</div>
+			</li>
+			{% endfor %}
+
+			

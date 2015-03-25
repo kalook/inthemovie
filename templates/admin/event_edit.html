@@ -1,0 +1,209 @@
+{%  extends 'admin_base.html' %}
+{% block external %} 
+    <link href="/script/smarteditor/css/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/script/smarteditor/js/HuskyEZCreator.js"></script>
+	<style>
+	label { 
+	    text-align: right;
+		width:130px;
+		float: left;
+		margin:0px 10px 0px 0px;
+	}
+
+	p { margin-top: 10px; }
+
+	legend { display: none; }
+	fieldset { border:0; }
+	</style>
+{% endblock %}
+{%   block content %}
+	<h3>이벤트 관리</h3>
+    <form method="post" action="." enctype="multipart/form-data">
+    <fieldset>
+    <p>
+    	<label>구분 :</label>
+        <input type="radio" name="type" id="type" value="preview" {% if view.type=='preview' %} checked {% endif %} />&nbsp;시사회&nbsp;
+		<input type="radio" name="type" id="type" value="reserve" {% if view.type=='reserve' %} checked {% endif %} />&nbsp;예매권&nbsp;
+		<input type="radio" name="type" id="type" value="show"    {% if view.type=='show' %} checked {% endif %} />&nbsp;연극/공연&nbsp;
+		<input type="radio" name="type" id="type" value="etc"     {% if view.type=='etc' %} checked {% endif %} />&nbsp;기타&nbsp;
+	</p>
+    <p>
+    	<label>응모방식 :</label>
+        <input type="radio" name="req_type" id="req_type" value="normal" {% if view.req_type == 'normal' %} checked {% endif %} />&nbsp;일반&nbsp;
+		<input type="radio" name="req_type" id="req_type" value="social" {% if view.req_type == 'social' %} checked {% endif %} />&nbsp;소셜댓글&nbsp;
+	</p>	
+	<p>
+		<label>제목 :</label>
+		<input type="text" name="subject" id="subject" style="width:200px;" value="{{ view.subject }}" />
+	</p>
+	<p>
+		<label>영화명 :</label>
+		<input type="text" name="movie_title" id="movie_title" style="width:200px;" value="{{ view.movie_title }}" />
+	</p>
+	<p>
+		<label>썸네일 이미지 :</label>
+		<img src="/files/events/{{ view.thumnail_image }}" width="100" height="50" />
+		<input type="checkbox" name="is_del1" id="is_del1" value="true" />삭제<br />
+		<input type="file" name="thumnail_image" id="thumnail_image" style="width:200px;" />
+	</p>	
+	{% if view.main_image %}
+	<p>
+		<label>본문 이미지 :</label>
+		<img src="/files/events/{{ view.main_image }}" width="100" height="50" />
+		<input type="checkbox" name="is_del2" id="is_del2" value="true" />삭제<br />
+		<input type="file" name="main_image" id="main_image" style="width:200px;" />
+	</p>
+	{% endif %}
+	{% if view.vod_url %}
+	<p>
+		<label>관련 동영상 :</label>
+		<textarea name="vod_url" id="vod_url" style="width:500px;height:100px;">{{ view.vod_url|st_replace('"',"'") }}</textarea>&nbsp;사이즈(455px,268px)
+	</p>
+	{% else %}
+	<p>
+		<label>관련 동영상 :</label>
+		<input type="text" name="vod_url" id="vod_url" style="width:200px;" />사이즈(455px,268px)
+	</p>
+	{% endif %}
+	{% if view.movie %}
+	<p>
+		<label>핫무비 영화 :</label>
+		<input type="text" name="hotmovie" id="hotmovie" style="width:200px;" value="{{ view.movie.title_kor }}"/>&nbsp;
+		<input type="button" value="선택" onclick="get_hotmovie();"/>
+		<input type="hidden" name="hotmovie_id" id="hotmovie_id" value="{{ view.movie.id }}" />
+	</p>
+	<div id="hotmovie_list" style="margin-left:10px;border:1px soild #000000;display:none;width:700px;height:300px;overflow:auto;"></div>	
+	{% endif %}
+	<p>
+		<label>일시 :</label>
+		<input type="text" name="evt_date" id="evt_date" style="width:200px;" value="{{ view.date }}" />
+	</p>
+	<p>
+		<label>장소 :</label>
+		<input type="text" name="place" id="place" style="width:200px;" value="{{ view.place }}" />
+	</p>
+	<p>
+		<label>인원 :</label>
+		<input type="text" name="people" id="people" style="width:200px;" value="{{ view.people }}" />
+	</p>
+	<p>
+		<label>발표 :</label>
+		<input type="text" name="announce" id="announce" style="width:200px;" value="{{ view.announce }}" />
+	</p>
+	<input type="hidden" name="people_count" id="people_count" value="100" />
+	
+	<p style="padding-left:140px;">
+		본문내용<br />
+        <textarea name="ir1" id="ir1" style="width:700px; height:350px; display:none;">{{ view.main_content }}</textarea>	
+	</p>
+	<p style="padding-left:140px;">
+		유의사항<br />
+        <textarea name="ir2" id="ir2" style="width:700px; height:350px; display:none;">{{ view.rule_content }}</textarea>	
+	</p>
+    <p>
+    	<label>코멘트 사용여부 :</label>
+		<input type="radio" name="comment_type" id="comment_type" value="F" {% if view.comment_type =='F' %} checked {% endif %} />&nbsp;사용안함&nbsp;
+		<input type="radio" name="comment_type" id="comment_type" value="T" {% if view.comment_type =='T' %} checked {% endif %} />&nbsp;사용함&nbsp;
+		 (블라인드, 혹은 다른 정보를 받아야하는 경우)
+	</p>	
+    <p>
+    	<label>진행여부 :</label>
+		<input type="radio" name="status" id="status" value="closed" {% if view.status=='closed' %} checked {% endif %} />&nbsp;준비중&nbsp;
+        <input type="radio" name="status" id="status" value="start"  {% if view.status=='start' %} checked {% endif %}/>&nbsp;진행&nbsp;
+		<input type="radio" name="status" id="status" value="end" 	{% if view.status=='end' %} checked {% endif %} />&nbsp;종료&nbsp;
+	</p>
+	<p>
+		<input type="button" onclick="_onSubmit(this)" value="서버에 전송" />
+	</p>
+	</fieldset>
+    </form>
+	<script type="text/javascript">
+  		// 이미지업로드 경로
+  		var imagepath = "/files/events";
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+		    oAppRef: oEditors,
+		    elPlaceHolder: "ir1",
+		    sSkinURI: "/script/smarteditor/SEditorSkin.html",
+		    fCreator: "createSEditorInIFrame",
+			uploadCode: "events"
+		});
+		nhn.husky.EZCreator.createInIFrame({
+		    oAppRef: oEditors,
+		    elPlaceHolder: "ir2",
+		    sSkinURI: "/script/smarteditor/SEditorSkin.html",
+		    fCreator: "createSEditorInIFrame",
+			uploadCode: "events"
+		});
+		
+		function _onSubmit(elClicked){
+			// 에디터의 내용을 에디터 생성시에 사용했던 textarea에 넣어 줍니다.
+			oEditors.getById["ir1"].exec("UPDATE_IR_FIELD", []);
+			oEditors.getById["ir2"].exec("UPDATE_IR_FIELD", []);
+			if($("#subject").val() == "") {
+				alert("제목을 입력하세요.");
+				$("#subject").focus();
+				return ;
+			}
+			if($("#movie_title").val() == "") {
+				alert("영화명을 입력하세요.");
+				$("#movie_title").focus();
+				return ;
+			}
+
+ 			if($("#evt_date").val() == "") {
+				alert("일시를 입력하세요.");
+				$("#evt_date").focus();
+				return ;
+			}
+ 			if($("#place").val() == "") {
+				alert("장소를 입력하세요.");
+				$("#place").focus();
+				return ;
+			}
+ 			if($("#people").val() == "") {
+				alert("인원을 입력하세요.");
+				$("#people").focus();
+				return ;
+			}
+ 			if($("#announce").val() == "") {
+				alert("발표일을 입력하세요.");
+				$("#announce").focus();
+				return ;
+			}
+
+ 			if($("#ir1").val() == "") {
+				alert("본문내용을 입력하세요.");
+				$("#ir1").focus();
+				return ;
+			}
+ 			if($("#ir2").val() == "") {
+				alert("유의사항을 입력하세요.");
+				$("#ir2").focus();
+				return ;
+			}
+			// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+			elClicked.form.submit();
+		}
+		function insertIMG(irid,fileame){
+			var sHTML = "<a href='https://inthe-movie.com" + imagepath + "/" + fileame + "' target='_blank'>";
+			sHTML += "<img src='https://inthe-movie.com" + imagepath + "/" + fileame + "' border='0'></a>";
+			oEditors.getById[irid].exec("PASTE_HTML", [sHTML]);
+		}
+		function get_hotmovie() {
+			$('#hotmovie_list').slideDown();
+			$.ajax({
+				type: "GET",
+				url: "/inthe-movie/admin/hotmovie/select",
+				success: function(html){
+					$('#hotmovie_list').html(html);
+				}
+			});
+		}
+		function selectMovie(title,id) {
+			$('#hotmovie').val(title);
+			$('#hotmovie_id').val(id);
+			$('#hotmovie_list').hide();
+		}	
+	</script>
+{%  endblock %}

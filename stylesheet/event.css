@@ -1,0 +1,76 @@
+/*이벤트 시작*/
+.event_title_area{margin-top:23px;margin-bottom:10px;clear:both}
+.event_view{width:680px;float:left}
+.event_menu{width:677px;float:left;margin-bottom:10px;border-right:none}
+.evnet_button a{width:132px;height:22px;text-align:center;background:#f5f5f5;color:#858585;padding-top:7px;float:left;
+font-size:0.9em;font-weight:900;border-top:3px solid #cfcfcf;border-right:3px solid #cfcfcf;border-bottom:3px solid #cfcfcf}
+.evnet_button a:hover{background:#ffffff;border-bottom:3px solid #ffffff;color:#3b3b3b}
+.evnet_button a.select{background:#ffffff;border-bottom:3px solid #ffffff;color:#3b3b3b;width:134px}
+.event_first a{border-left:3px solid #cfcfcf}
+.event_contents{width:100%;float:left;border-top:3px solid #cfcfcf;border-bottom:3px solid #cfcfcf;padding-top:10px;margin-bottom:20px}
+.contents_list dt{float:left;}
+.contents_list dt{padding-top:0px;padding-bottom:5px}
+.contents_list dt img{margin-right:10px;margin-top:0px}	
+.contents_list dd span{color:#7f7f7f;font-size:0.7em;margin-bottom:5px}
+.contents_list dd h1{color:#c61515;font-size:1em;margin-bottom:3px;}
+.contents_list dd h2{width:36px;height:15px;font-size:0.6em;color:#ffffff;background:#3b3b3b;padding:2px 11px 2px 7px;display:inline;margin-right:10px}
+.contents_line{height:1px;clear:both;background:#cfcfcf;margin-bottom:0px}
+.event_contents_area{padding-top:10px;padding-bottom:10px}
+.event_contents_area_single{padding:10px;border:3px solid #cfcfcf}
+.event_contents_single{width:100%;float:left;padding-top:10px;margin-bottom:20px}
+.event_information{width:100%;height:268px;float:left;margin-bottom:19px}
+.event_information_movie_view{width:455px;height:268px;background:url(/images/event/pic_nomovie.png);float:right}
+.event_line{height:3px;margin-top:10px;margin-bottom:10px;}
+.event_sub{font-size:0.9em}
+.enter_area{text-align:center;}
+.enter{width:680px;height:40px;border-top:1px solid #cfcfcf;border-bottom:1px solid #cfcfcf;background-color:#f5f5f5;margin-bottom:10px}
+.enter span{margin: 0 auto;vertical-align:middle;height:40px}
+.enter_font{font-size:0.8em;font-weight:900;}
+.black_border{border:1px solid #202020}
+.event_table_area{width:680px;float:left}
+.event_table_area .review_table .no{width:80px}
+.event_table_area .review_table .user{width:107px}
+.event_table_area .review_table .counter{width:67px}
+.event_table_area .review_table .today{width:62px}
+.event_table_area .review_table .day{width:86px}
+.event_table_area .review_table .day{width:86px}
+.event_table_area .review_table .club_subject{padding-left:16px}
+.event_table_area .review_table .movie_name{width:89px}
+.event_table_area .review_table .align_left{text-align:left}
+.event_table_page{margin-top:100px}
+.event_button a{width:132px}
+.event_select a{width:134px;background:#ffffff;border-bottom:3px solid #ffffff;color:#3b3b3b}
+.event_botton_tail a{border:none;width:136px}
+.event_table_line{float:left;width:100%;height:3px;background:#cfcfcf}
+.event_share_table{width:100%;border-top:3px solid #cfcfcf}
+.evnet_share_text p{margin-left:20px}
+.black_border{border:1px solid #7c7c7c}
+.share_table_button{margin-top:9px;}
+.share_table_button input{margin-top:9px;float:left}
+.share_spacing{word-spacing:1em}
+.event_share_table .subject{width:48px}
+.event_share_table .content{padding-left:10px}
+.share_commit{width:63px;height:23px;background:url(/images/event/pic_share_commit.png)}
+.share_list{width:63px;height:23px;background:url(/images/event/pic_share_list.png)}
+.event_bold{font-weight:900}
+.bt_twitter{width:55px;height:20px;background:url(/images/event/pic_twitter.png);border:none;margin-right:5px}
+.bt_m2day{width:55px;height:20px;background:url(/images/event/pic_me2day.png);border:none}
+.bt_up{width:63px;height:23px;background:url(/images/event/pic_up_text.png)}
+.bt_align input{margin-left:5px}
+.bt_down{width:63px;height:23px;background:url(/images/event/pic_down_text.png)}
+.bt_write{width:63px;height:23px;background:url(/images/event/pic_write.png)}
+.realblack_border{border:1px solid #202020}
+.minus_ten_bottom{margin-bottom:-10px}
+.gray_border{border:3px solid #cfcfcf}
+.comment_input_text{width:546px;height:23px;border:1px solid #cfcfcf;background:#f8f8f8}
+.no_margin{margin:0;padding:0}
+.comment_text{font-size:0.9em;width:45px}
+.comment_text_area{margin-right:10px}
+.no_top_border{width:100%;border-top:none;margin-top:2px;}
+.comment_title{width:63px}
+.comment_subject{width:546px}
+.comment_day{width:71px}
+.comment_top_margin{margin-top:20px;float:left}
+.comment_commit_margin{margin-right:10px}
+
+/*이벤트 끝*/

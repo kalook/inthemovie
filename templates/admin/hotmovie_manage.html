@@ -1,0 +1,48 @@
+{%  extends 'admin_base.html' %}
+{%   block content %}
+<form method="post" name="hotmovie_form" id="hotmovie_form" action=".">
+<input type="hidden" name="hotmovie_id" id="hotmovie_id" />
+<input type="hidden" name="hotmovie_type" id="hotmovie_type" />
+<table class="review_table" width="80%" style="width:90%;">
+	<thead>
+	<tr>
+		<th>번호</th>
+		<th>이미지</th>
+		<th>영화명</th>
+		<th>영문명</th>
+		<th>노출</th>
+		<th>수정</th>
+	</tr>
+	</thead>
+	<tbody>
+{% for movie in movies_list %}
+	<tr>
+		<td>{{ movie.id }}</td>
+		<td><img src="{{ movie.thumnail }}" width="80" hight="50" /></td>
+		<td>{{ movie.title_kor }}</td>
+		<td>{{ movie.title_eng }}</td>
+		<td>
+			{% if movie.show == 'Y' %} YES {% else %} NO{% endif %}
+		</td>
+		<td>
+			{% if movie.show == 'Y' %} 
+				<input type="button" value="노출해제" onclick="updateShow('N',{{ movie.id }})" /> 
+			{% else %} 
+				<input type="button" value="노출설정" onclick="updateShow('Y',{{ movie.id }})" /> 
+			{% endif %}
+		</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+<script type="text/javascript">
+	function updateShow(type,id) {
+		var form = document.getElementById('hotmovie_form');
+		document.getElementById('hotmovie_id').value = id;
+		document.getElementById('hotmovie_type').value = type;
+		alert("노출설정이 수정되었습니다.");
+		form.submit();
+		
+	}
+</script>
+{%  endblock %}

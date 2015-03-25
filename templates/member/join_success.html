@@ -1,0 +1,26 @@
+{%  extends 'base.html' %}
+{%  block title %}  회원가입완료 {% endblock %}
+{%  block content %}
+<div id="hotmovie_submenu">
+	<span class="hotmovie_menu select menu_select"><a href="#">회원가입</a></span>
+	<span class="mypage_menu"><a href="#">가입완료</a></span>	
+	<span class="mypage_menu"><a href="#" class="red_arrow icon">></a></span>
+	<span class="mypage_menu"><a href="#">인증</a></span>
+	<span class="mypage_menu"><a href="#" class="red_arrow icon">></a></span>
+	<span class="mypage_menu mypage_select"><a href="#">인증키 발송확인</a></span>
+	<span class="mypage_menu"><a href="#" class="red_arrow icon">></a></span>
+	<span class="mypage_menu"><a href="#">가입정보입력 및 약관동의</a></span>
+	<div id="header_bar_end"></div>
+</div>
+<div class="mypage_join">
+	<div class="confirm gray_border">
+		<div class="mypage_title event_bold">인증키 발송완료!</div>
+		<div class="confirm_text">
+			<div class="confirm_content">가입시 입력하신 <span class="red event_bold">{{ session.confirm_email }}</span> 메일주소로 인증키가 발송되었습니다.</br>
+				메일을 확인하셔서 인증버튼을 클릭하시면 최종가입이 완료됩니다.
+			</div>
+		</div>
+		<input type="button" class="bt_confirm icon" value="확인" onclick="document.location.href='/login';" />
+	</div>
+</div>
+{%  endblock %}

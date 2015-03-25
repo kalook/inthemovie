@@ -1,0 +1,15 @@
+{% if code == 'ticket' %}
+<h1 class="page_title">
+	<img src="/images/event/title_ticket.png" alt="벼락표 나눔터" />
+</h1>
+{% elif code == 'announce' %}
+<h1 class="page_title">
+	<img src="/images/event/title_announce.png" alt="당첨자 발표" />
+</h1>
+{% elif not c == 'home' %} 
+<h1 class="page_title">
+	<img src="/images/club/title_{{code}}.png" alt="진행중인이벤트" />
+</h1>
+{% endif %}
+
+

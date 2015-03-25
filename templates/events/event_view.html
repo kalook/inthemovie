@@ -1,0 +1,211 @@
+{%  extends 'base.html' %}
+{%  block title %} 이벤트 {% endblock %}
+{%  block external %}
+	<script type="text/javascript" src="/script/board.js"></script>
+{% endblock %}
+{%   block content %}
+
+{{ "events.available"|get_lnb() }}
+
+<h1 class="page_title">
+	<img src="/images/event/title_available.png" alt="진행중인이벤트" />
+</h1>
+<div id="page_body">
+	<div class="main_body">
+		<div class="gray_border join_textarea fl" style="width:647px; margin:0px">
+			<div class="fl">
+				<img src="https://inthe-movie.com/files/events/{{ view.thumnail_image }}" alt="이벤트 사진" width="160" height="98" />
+			</div>
+			<dl class="fl event_detail" style="padding-left:10px">
+				<dt>
+					{{ view.subject }}
+				</dt>
+				<dd>
+					일시 {{ view.date }}
+				</dd>	
+				<dd>
+					장소 {{ view.place }}
+				</dd>	
+				<dd>
+					인원 {{ view.people }}
+				</dd>
+				<dd>
+					발표 {{ view.announce }}
+				</dd>
+			</dl>
+			<div class="fr">
+				<div class="addthis_toolbox addthis_default_style fr" addthis:url="https://inthe-movie.com/events/view/{{ view.id }}" addthis:title="{{ view.subject }}" style="width:170px">
+					 <a class="addthis_button_preferred_1"></a>
+					 <a class="addthis_button_preferred_2"></a>
+					 <a class="addthis_button_preferred_3"></a>
+					 <a class="addthis_button_preferred_4"></a>
+					 <a class="addthis_button_compact"></a>
+					 <a class="addthis_counter addthis_bubble_style"></a>
+				
+				<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dfc0aa00168e545"></script>
+				
+				</div>
+			</div>
+			
+		</div>
+		<div class="clear">
+		</div>
+		
+		<div class="b_line">
+		<div>&nbsp;</div>
+		</div>
+		<ul class="tab_menu">
+			<li class="selected"><a href="#">이벤트 상세정보</a></li>
+		</ul>
+		
+		<div class="b_line">
+		<div>&nbsp;</div>
+		</div>
+		
+		<div class="event_information">
+			<img src="https://inthe-movie.com/files/events/{{ view.main_image }}" width="225" height="268" alt="월스트리트" />
+			{% if view.vod_url %}
+				{{ view.vod_url }}
+			{% else %}
+			<div class="event_information_movie_view" ></div>
+<!-- 			내용이 없으면 배경으로 동영상없음으로 처리됨   사이즈(455px,268px) -->
+			{% endif %}
+		</div>
+		
+		<div class="event_title_area">
+			<span class="movie_title event_sub">신청정보</span>
+			<div class="contents_line event_line"></div>
+		</div>
+		
+		<div class="fl">
+		{{ view.main_content|getTarget() }}
+		</div>
+		
+		<div class="event_title_area"> 
+			<span class="movie_title event_sub">유의사항</span>
+			<div class="contents_line event_line"></div>
+		</div>
+		<div class="fl">
+			{{ view.rule_content|getTarget() }}
+		</div>
+			
+		<div class="event_title_area" style="clear:both" id="enter_area_tail" name="enter_area_tail">
+			<span class="movie_title event_sub">응모하기</span>
+			<div class="contents_line event_line"></div>
+		</div>	
+		
+		<div class="enter_area" >
+			<input type="hidden" name="user_id" id="user_id" value="{{ session.user_id }}" />
+			<input type="hidden" name="evt_id" id="evt_id" value="{{ view.id }}" />
+			<input type="hidden" name="type" id="type" value="{{ view.type }}" />
+			{% if request_info %}
+				{% include '/events/event_request_list.html' %}
+			{% else %}
+				{% if session.user_id %}
+				{% if view.comment_type == 'T' %}
+				<div class="fl">
+				<textarea name="comment" id="comment" style="width:500px;height:35px;"></textarea>
+				{% endif %}
+				<a href="#" id="evt_request" name="evt_request"><img src="/images/event/pic_enter.png" class="black_border" alt="응모하기" /></a>
+				</div>
+				{% else %}
+				
+				<div class="enter">
+				<span class="enter_font red">로그인 후 응모 가능합니다</span>
+				</div>
+				{% endif %}
+			{% endif %}
+		</div>
+
+		<div class="share_table_button" >
+			<span class="left bt_align" style="margin-bottom:20px;" >
+				<input type="button" class="share_list icon black_border" id="lists" />
+			</span>
+			<span id ="delete_button" name="delete_button" class="right bt_align" style="margin-bottom:20px;">
+				<input type="hidden" value="{{ view.id }}" name="evt_id" id="evt_id" />
+				<input type="hidden" value="{{ session.user_id }}" name="user_id" id="user_id" />
+				<a href="#"  id="evt_delete" name="evt_delete"><b>응모 취소</b></a>
+			</span>
+		</div>
+		
+	</div>
+	
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+	
+
+
+
+<script type="text/javascript">
+	function event_request() {
+		
+		var item = $(this).parent().parent();
+		var data = {
+			user_id		: item.find("#user_id").val(),
+			evt_id	: item.find("#evt_id").val(),
+			type	: item.find("#type").val(),
+			{% if view.comment_type == 'T' %}
+			comment	: item.find("#comment").val()
+			{% endif %}
+		};
+		$.post("/events/request", data, function (result) {
+			
+			if(result != "false") {
+				alert("이벤트 신청이 완료되었습니다.");
+				$("#delete_button").show();
+				$(".enter_area").load("/events/request/get?id="+result);
+			}
+			else {
+				alert("신청이 실패했습니다.");
+			}
+		});
+		return false;			
+	}
+
+	function event_delete() {
+		
+		var item = $(this).parent();
+		var data = {
+			evt_id	: item.find("#evt_id").val(),
+			user_id	: item.find("#user_id").val()
+		};
+		
+		$.post("/events/delete", data, function (result) {
+
+			if(result != "false") {
+				$(".enter_area").remove();
+				$("#enter_area_tail").append(result);
+				
+				$(document).ready(function() {
+					$("#delete_button").hide();
+					$("#evt_request").click(event_request);		
+					
+				});
+				alert("이벤트가 취소되었습니다.");
+			}
+			else {
+				alert("취소가 실패했습니다.");
+			}
+		});
+
+		return false;			
+	}
+
+	$(document).ready(function() {
+		$("#evt_request").click(event_request);
+		$("#evt_delete").click(event_delete);
+		$("#lists").click(function(){ document.location.href='/events/';});
+		{% if request_info %}
+		$("#delete_button").show();
+		{% else %}
+		$("#delete_button").hide();
+		{% endif %}
+	}); 
+
+	//resizeBoardImage(675);
+	
+</script>
+{%  endblock %}

@@ -1,0 +1,78 @@
+{%  extends 'admin_base.html' %}
+{%   block content %}
+<div class="mypage_join">
+	<form method="post" action=".">
+	<div class="join_area">
+	<table class="mypage_table" width="745">
+		<tr>
+			<th>아이디</th>
+			<td>
+				{{ member_info.user_id }}
+				<input type="hidden" id="id" name="id" value="{{member_info.id}}" />
+			</td>
+		</tr>
+		<tr>
+			<th>패스워드변경</th>
+			<td>
+				<input type="password" id="password" name="password" class="login_input join_input" />
+				<span class="red">* 영문, 숫자만 이용가능(6자이상)</span>
+			</td>
+		</tr>
+
+		<tr>
+			<th>이름</th>
+			<td>
+				<input type="text" id="name" name="name" class="login_input join_input" value="{{ member_info.name }}" />
+			</td>
+		</tr>
+		<tr class="no_border_th no_border">
+			<th>닉네임</th>
+			<td>
+				<input type="text" id="nick_name" name="nick_name" class="login_input join_input" value="{{ member_info.nick_name }}" />
+				<input type="button" class="bt_overlap icon" value="중복확인" />
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><p>
+				<span class="red clear">* 공백없이 한글,영문,숫자만 입력 가능합니다.</span>
+				</p>
+				<p>
+				<span class="red clear">* 등록하신 닉네임은 IN THE-MOVIE내에서 사용하게 됩니다.</span>
+				</p></td>
+		</tr>
+		<tr>
+			<th>이메일주소</th>
+			<td>
+				<input type="text" id="email" name="email" class="login_input join_input" value="{{ member_info.email }}" />
+			</td>
+		</tr>
+		
+		<tr class="no_border">
+			<th>핸드폰번호</th>
+			<td>
+				<input type="text" id="mobile_phone" name="mobile_phone" class="login_input join_input" value="{{ member_info.mobile_phone }}" />
+			</td>
+		</tr>
+	</table>
+	<div style="margin:20px;">
+		<input type="submit"  style="height:30px;width:100px;border:3px solid #cccccc;" value="수정" />	
+		<input type="button"  style="height:30px;width:100px;border:3px solid #cccccc;" onclick="history.go(-1);" value="목록" />
+		<input type="button"  style="height:30px;width:100px;border:3px solid #cccccc;" value="이벤트 블럭" onclick="set_panalty({{ member_info.id }});" />
+	</div>
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+	function set_panalty(id) {
+		$.ajax({
+			url:"/inthe-movie/admin/panalty/"+id,
+			success:function(data){
+				if(data == 'true') {
+					alert('이벤트 블럭 되었습니다.');
+				}
+			}
+		});
+	}
+</script>
+{%  endblock %}

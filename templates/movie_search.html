@@ -1,0 +1,21 @@
+{%  extends 'base.html' %}
+{% block title %} 영화검색 {% endblock %}
+{% block external %}
+
+{% endblock %}
+{% block content %}
+<div class="basic_gap">&nbsp;</div>
+<div id="page_body">
+	<div class="main_body">
+				
+		{% include '/movies/main_movies.html' %}
+	
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+
+{% endblock %}

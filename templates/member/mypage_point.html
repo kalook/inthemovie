@@ -1,0 +1,72 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 포인트 {% endblock %}
+{%  block content %}
+
+{{ "member.point" | get_lnb(session) }}
+
+<h1 class="page_title">
+<!-- 	<img src="/images/event/title_available.png" alt="진행중인이벤트" /> -->
+</h1>
+<div id="page_body">
+	<div class="main_body">
+	
+		<ul class="tab_menu">
+			<li class="{% if type == 'all' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/point">전체</a></li>
+			<li class="{% if type == 'get' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/point/?type=get">획득내역</a></li>
+			<li class="{% if type == 'use' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/point/?type=use">사용내역</a></li>
+		</ul>
+
+		<div class="b_line">
+		<div>&nbsp;</div>
+		</div>
+		<div class="event_item_row">
+			<fieldset class="post_list">
+				<legend>게시판 리스트</legend>
+				<table cellpadding="0" cellspacing="0">
+					<colgroup>
+						<col width="50" />
+						<col width="" />
+						<col width="120" />
+						<col width="60" />
+					</colgroup>
+					<tr>
+						<th>구분</th>
+						<th>상세내역</th>
+						<th>일시</th>
+						<th>포인트</th>
+					</tr>
+					{% for list in point_list.object_list %} 
+					<tr>
+						<td class="tLeft"><a href="#">{{ list.type }}</a></td>
+						<td class="tCenter">{{ list.description }}</td>
+						<td class="tCenter numeric">{{ list.reg_date|datetimeformat('%Y.%m.%d') }}</td>
+						<td class="tCenter numeric">{{ list.point }}</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="4" style="padding:70px 0px">
+							내역이 없습니다.
+						</td>
+					</tr>		
+					{% endfor %}
+				</table>
+			</fieldset>
+			<div>
+	
+				{% if digg.last > 1 %}
+				<div>{% include '/club/pagnation.html' %}</div>
+				{% endif %}
+				<div class="clear">
+				</div>
+			</div>
+		
+
+		</div>
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+{%  endblock %}

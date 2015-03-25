@@ -1,0 +1,82 @@
+<div class="cb_module cb_fluid" >
+	<div class="cb_lstcomment">
+	<ul>
+	{% if type=='twitter' %}
+	{% for twit in sns_list %}
+	<li class="cb_thumb_on">
+		<div class="cb_thumb" id="social_photo_image">
+		<a href="http://twitter.com/{{ twit.get('from_user') }}" target="_blank">
+			<img src="{{ twit.get('profile_image_url') }}" width="40" height="40" alt="썸네일" class="cb_usr_thumb"><span class="cb_tmp_border"></span>
+		</a>
+		</div>
+		<div class="cb_comment_area">
+			<div class="cb_info_area">
+				<div class="cb_section">
+					<span class="cb_nick_name cb_nick_name2">{{ twit.get('from_user') }}</span>
+					<span class="cb_date">{{ twit.get('created_at') }}</span>
+				</div>
+			</div>
+			<div class="cb_dsc_comment">
+				<p class="cb_dsc">
+					{{ twit.get('text')|create_id_link()|create_link() }}
+				</p>
+			</div>
+		</div>
+	</li>
+	{% endfor %}
+	<div ><a href="http://twitter.com/#!/search/{{ movie_info.title_kor }}" target="_blank" class="plus_link">더 많은 검색결과 보기</a></div>
+	
+	{% elif type=='me2day' %}
+	{% for me2day in sns_list%}
+	<li class="cb_thumb_on">
+		<div class="cb_thumb" id="social_photo_image">
+		<a href="http://me2day.net/{{me2day.get('author').get('id')}}" target="_blank">
+			<img src="{{me2day.get('author').get('face')}}" width="40" height="40" alt="썸네일" class="cb_usr_thumb"><span class="cb_tmp_border"></span>
+		</a>
+		</div>
+		<div class="cb_comment_area">
+			<div class="cb_info_area">
+				<div class="cb_section">
+					<span class="cb_nick_name cb_nick_name2">{{me2day.get('author').get('nickname')}}</span>
+					<span class="cb_date">{{ me2day.get('pubDate') }}</span>
+				</div>
+			</div>
+			<div class="cb_dsc_comment">
+				<p class="cb_dsc">
+					{{ me2day.get('body') }}
+					<a href="{{ me2day.get('link') }}">{{ me2day.get('body')|strip_tags }}</a>
+				</p>
+			</div>
+		</div>
+	</li>
+	{% endfor %}	
+	<div><a href="http://me2day.net/search?query={{ movie_info.title_kor }}" target="_blank" class="plus_link" >더 많은 검색결과 보기</a></div>
+	{% elif type=='mixsns' %}
+	{% for mix in sns_list %}
+<!-- 	<li class="cb_thumb_on"> -->
+<!-- 		<div class="cb_thumb" id="social_photo_image"> -->
+<!-- 		<a href="{{ mix.get('user_url') }}" target="_blank"> -->
+<!-- 			<img src="{{ mix.get('thumbnail_url') }}" width="40" height="40" alt="썸네일" class="cb_usr_thumb"><span class="cb_tmp_border"></span> -->
+<!-- 		</a> -->
+<!-- 		</div> -->
+<!-- 		<div class="cb_comment_area"> -->
+<!-- 			<div class="cb_info_area"> -->
+<!-- 				<div class="cb_section"> -->
+<!-- 					<span class="cb_nick_name cb_nick_name2">{{ mix.get('user_name') }}</span> -->
+<!-- 					<span class="cb_date">{{ mix.get('create_time') }}</span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="cb_dsc_comment"> -->
+<!-- 				<p class="cb_dsc"> -->
+<!-- 					{{ mix.get('contents')}} -->
+<!-- 				</p> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</li> -->
+	{% endfor %}
+	{% endif %}
+	</ul>
+	</div>
+</div>
+
+

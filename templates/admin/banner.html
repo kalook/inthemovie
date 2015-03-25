@@ -1,0 +1,89 @@
+{%  extends 'admin_base.html' %}
+{% block content %}
+<div class="banner_wrap">
+	배너 입니다.
+
+	<div class="banner_head">
+		<h1>인더딜 관리자</h1>
+		<a href=" /banner">배너관리</a>
+		<a href="#">업체관리</a>
+	</div>
+	<div class="banner_contents">
+	<form id="banner_upload" name="banner_upload" method="POST" action="."  enctype="multipart/form-data">
+		<dl class="banner_listing">
+			<dt>배너 업로드</dt>
+			<dd>	<input type="file" id="upload" name="upload" />(678*112)(278*418)</dd>
+		</dl>
+		<dl class="banner_listing">
+			<dt>링크</dt>
+			<dd>	<input type="text" size="100" id="link" name="link" /></dd>
+		</dl>
+		<dl class="banner_listing">
+			<dt>삽입위치</dt>
+			<dd>	
+				<select id="position" name="position">
+					<option value="main_top">상단메인</option>
+					<option value="right_1">우측 상단</option>
+					<option value="right_2">우측 하단</option>
+				</select>
+			</dd>
+		</dl>
+		<dl class="banner_listing">
+			<dt>새창여부</dt>
+			<dd>	
+				<select id="blank" name="blank">
+					<option value="_blank">새창</option>
+					<option value="_self">기존창</option>
+				</select>
+			</dd>
+		</dl>
+		<dl class="banner_listing">
+			<dt>시작일 (YYYY-MM-DD)</dt>
+			<dd>	
+				<p><input type="text" id="start_date" name="start_date" class="datepicker" title="From:YY-MM-DD"/></p>
+			</dd>
+		</dl>
+		<dl class="banner_listing">
+			<dt>마감일 (YYYY-MM-DD)</dt>
+			<dd>	
+				<p><input type="text" id="end_date" name="end_date" class="datepicker" title="To:YY-MM-DD" /></p>
+			</dd>
+		</dl>
+		<input type="submit" value="upload" />
+
+	</form>
+	<table class="banner_table" >
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>이미지 URL</th>
+				<th>링크</th>
+				<th>새창여부</th>
+				<th>삽입위치</th>
+				<th>시작일</th>
+				<th>마감일</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for list in banner_List %}
+			<tr>
+				<td>{{ list.id }}</td>
+				<td><a href="{{ list.link }}"><img src="/files/banner_files/{{ list.banner_root }}" style="width:200px;height:80px"/></a></td>
+				<td>{{ list.link }}</td>
+				<td>{{ list.blank }}</td>
+				<td>{{ list.position }}</td>
+				<td>{{ list.start_date }}</td>
+				<td>{{ list.last_date }}</td>
+				<td><a href="/inthe-movie/admin/ad/edit/{{ list.id }}">수정</a></td>
+				<td><a href="/inthe-movie/admin/ad/delete/{{ list.id }}">삭제</a></td>	
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	</div>
+	
+</div>
+{% endblock %}

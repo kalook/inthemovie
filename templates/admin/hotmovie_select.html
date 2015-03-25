@@ -1,0 +1,24 @@
+<table class="review_table" width="80%" style="width:90%;">
+	<thead>
+	<tr>
+		<th>번호</th>
+		<th>이미지</th>
+		<th>영화명</th>
+		<th>영문명</th>
+		<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+{% for movie in movies_list %}
+	<tr>
+		<td>{{ movie.id }}</td>
+		<td><img src="{{ movie.thumnail }}" width="80" hight="50" /></td>
+		<td>{{ movie.title_kor }}</td>
+		<td>{{ movie.title_eng }}</td>
+		<td>
+			<input type="button" value="선택" onclick="selectMovie('{{ movie.title_kor }}',{{ movie.id }})" /> 
+		</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>

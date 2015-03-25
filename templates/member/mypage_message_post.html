@@ -1,0 +1,64 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 포인트 {% endblock %}
+{%  block content %}
+{{ "member.message" | get_lnb(session)}}
+
+<h1 class="page_title">
+</h1>
+
+<div id="page_body">
+	<div class="main_body">
+	
+		<ul class="tab_menu">
+			<li class="{% if type == 'receive' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=recive">받은쪽지함</a></li>
+			<li class="{% if type == 'send' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=send">보낸쪽지함</a></li>
+			<li class="{% if type == 'all' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/post/">쪽지쓰기</a></li>
+		</ul>
+	
+		<div class="b_line">
+		<div>&nbsp;</div>
+		</div>
+
+		<div class="point_table_area"> 
+		<form action="." method="post">
+		<table class="point_table">
+			<thead>
+			</thead>
+			<tbody class="message_view">
+				<tr class="no_border">
+					<th style="border-bottom:0">받는 사람</th>
+					<td><input type="text" name="recived_id" id="recived_id" class="login_input join_input" /></td>
+				</tr>
+				<tr class="point_sub_text">
+					<td></td>
+					<td><span>(받는사람의 아이디를 입력해 주시고 여러 사람에게 보낼때는 컴마(,)로 구분해주세요)</span></td>
+				</tr>
+				<tr class="point_bottom">
+					<td></td>
+					<td >
+						<textarea name="content" id="content"></textarea>
+					</td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr class="no_border bt_area">
+					<td colspan="2">
+					<input type="submit" class="bt_send icon black_border" value="" />
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		</form>
+	</div>
+	</div>
+	<div id="right_banners" class="aside"></div>
+	<div class="clear">
+	</div>
+</div>
+
+{%  endblock %}
+
+
+
+

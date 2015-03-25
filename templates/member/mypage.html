@@ -1,0 +1,15 @@
+{%  extends 'base.html' %}
+{%  block title %} mypage {% endblock %}
+{%  block sub_menu %} 
+    <ul id="sub">
+        <li><a href="/user/{{ session.user_id }}/point">포인트 내역</a></li>
+        <li><a href="/user/{{ session.user_id }}/message">쪽지</a></li>
+        <li><a href="/user/{{ session.user_id }}/info">개인정보 수정</a></li>
+        <li><a href="/user/{{ session.user_id }}/dropout">회원 탈퇴</a></li>
+    </ul>
+{% endblock %}
+{%   block content %}
+    <h3>마이페이지</h3>
+    {{ session.user_id }} 님의 마이페이지입니다. 
+    
+{%  endblock %}

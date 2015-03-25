@@ -1,0 +1,611 @@
+{% extends 'hotmovie_base.html' %}
+{% block title %} hotmovie {% endblock %}
+{% block external %}
+	<link rel="stylesheet" type="text/css" href="/stylesheet/social_comment.css" />
+{% endblock %}
+{% block facebook %}
+	<meta property="og:title" content="인더무비" /> 
+	{% if movie_info.thumnail %}
+	<meta property="og:image" content="http://test.inthe-movie.com{{ movie_info.thumnail }}" /> 
+	{% else %}
+	<meta property="og:image" content="/images/nohotmovie.png" /> 
+	{% endif %}
+	<meta property="og:description" content="" /> 
+	<meta property="og:url" content="http://test.inthe-movie.com">
+{% endblock %}
+{% block content %}
+
+{% include '/movies/hotmovie_top_area.html' %}
+
+<div class="basic_gap">&nbsp;</div>
+
+<div class="sub_title" style="width:680px;">
+	<h2 class="fl"><img src="/images/hotmovie/page_title_movietalk.png" alt="영화토크" /></h2>
+	<span class="more ">총 {{comment_count }}  건</span>
+</div>
+<div class="clear">
+	</div>
+<div id="page_body" style="width:100%;">
+	<div class="main_body" >
+	<div class="cb_module cb_fluid" >
+		<!-- Comment Input Area -->
+<div class="cb_wrt cb_default cb_profile">
+			<div class="cb_wrt_box">
+				<div class="cb_wrt_box2">
+				<form action="#" method="post">
+				<fieldset>
+				<legend>댓글 등록 폼</legend>
+					<div class="cb_usr_area">
+						<div class="cb_txt_area">
+							<!-- 유동형 덧글 입력상자 -->
+							<table cellspacing="0" border="1" class="cb_section">
+							<caption>덧글 입력박스</caption>
+							<thead>
+							<tr>
+							<th colspan="2" scope="col">유동형 덧글모듈</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td class="cb_thumbs">
+									<div class="cb_thumbs_box" id="social_photo_image">
+										<span class="cb_tmp_border"></span>
+									</div>
+								</td>
+								<td>
+									<input type="hidden" name="service_type" id="service_type" />
+									<input type="hidden" name="movie_id" id="movie_id" value="{{ movie_info.id }}" />
+									<textarea cols="80" rows="20" name="social_comment" id="social_comment" disabled="disabled" >로그인 후 토크내용 작성이 가능합니다.
+									
+									</textarea>
+								</td>
+								<td class="cb_btn_area">
+								<!-- [D] 등록 버튼 이미지 변화
+									기본 : http://static.naver.com/common/comment/btn_registry.gif
+									마우스 다운 : http://static.naver.com/common/comment/btn_registry_down.gif 
+									포커스 아웃 : http://static.naver.com/common/comment/btn_registry.gif -->
+									<!--<input type="image" onclick="post();" src="http://static.naver.com/common/comment/btn_registry.gif" alt="등록">-->
+									<img src="http://static.naver.com/common/comment/btn_registry.gif" alt="등록" onclick="post();" style="padding-left:10px;margin-top:3px;cursor:pointer"/>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<div class="cb_dsc_area">
+									
+									
+										<p class="cb_dsc">
+											<label for="chk_submit_m2day" class="cb_blind">인더무비 글 등록</label>
+											{% if twitter_profile %}
+												<img src="/images/comment_twitter_off.png" alt="twitter" class="btn" id="twitter" onclick="get_sns_data('twitter');" />
+											{% else %}
+												<a href="/oauth?twitter"><img src="/images/comment_twitter_off.png" alt="twitter" id="twitter" /></a>
+											{% endif %}
+											<!--
+											{% if facebook_profile %}
+												<img src="/images/comment_facebook_off.png" alt="facebook" class="btn" id="facebook" onclick="get_sns_data('facebook');" />
+											{% else %}
+												<a href="/oauth?facebook"><img src="/images/comment_facebook_off.png" alt="facebook" id="facebook" /></a>
+											{% endif %}
+											-->
+											{% if me2day_profile %}
+												<img src="/images/comment_me2day_off.png" alt="me2day" class="btn" id="me2day" onclick="get_sns_data('me2day');" />
+											{% else %}
+												<a href="/oauth?me2day"><img src="/images/comment_me2day_off.png" alt="me2day" id="me2day" /></a>
+											{% endif %}
+										</p>
+										<div class="cb_btn_area3">
+											<!--<button type="button" class="cb_help"><span>도움말</span></button>-->
+											<!-- Layer Popup -->
+										<div class="cb_ly_popup" style="display:none; width:278px; left:0; top:0">
+										<!-- [D] 닫기 버튼 클래스 변화
+											기본 : cb_close 
+											포커스 : cobx_close, cb_over 
+											포커스 아웃 : cb_close -->
+											<button type="button" class="cb_close" id="talking" onclick="post();" ><span><em>닫기</em></span></button>
+											
+										</div>
+										<div class="cb_cb"></div>
+										<!-- //Layer Popup -->
+										</div>
+										<!--<p class="cb_dsc4"><a href="#">SNS 로그인</a></p>-->
+										<div class="cb_dsc2">
+											<p><span class="red_color">*</span>SNS 로그인 후 참여 가능합니다. (인더무비 비회원도 참여 가능합니다^^)</p>
+										</div>
+										<span style="margin-left:20px;" id="sns_logout"></span>
+										
+									</div>
+								</td>
+								<td></td>
+							</tr>
+							</tbody>
+							</table>
+							<!-- //유동형 덧글 입력상자 -->
+						</div>
+					</div>
+				</fieldset>
+				</form>
+				</div>
+			</div>
+		</div>
+		<!-- Comment List -->
+		<div id="loading" style="clear:both;width:738px;text-align:center;display:none;"><img src="http://inthe-deal.kr/images/loading.gif" /></div>
+			<div class="cb_lstcomment" id="social_comment_list">
+			<ul>
+			{% for list in comment_list%}
+			{% if loop.index == 1 %}<input type="hidden" id="top_id" name="top_id" value="{{ list.id }}" /> {% endif %}
+			<li class="cb_thumb_on">
+				<div class="cb_thumb" id="social_photo_image">
+				<a href="{{ list.link }}" target="_blank">
+				{% if list.profile_image %}
+					<img src="{{ list.profile_image }}" alt="썸네일"  class="myphoto">
+				{% else %}
+					<img src="/images/mypic_me2day.png" alt="myphoto_me2day" class="myphoto" />
+				{% endif %}
+				</a>
+				</div>
+				<div class="cb_comment_area">
+					<div class="cb_info_area">
+						<div class="cb_section">
+							<a href="{{ list.link }}" target="_blank"><img src="/images/comment_{{ list.service }}.png" alt="{{ list.service }}" /></a>
+							<span class="cb_nick_name cb_nick_name2">{{ list.username }}</span>
+							<span class="cb_date">{{ list.create_date }}</span>
+						</div>
+						
+					</div>
+					<div class="cb_dsc_comment">
+						<p class="cb_dsc">
+							{{ list.content }}
+						</p>
+					</div>
+					
+				</div>
+			</li>
+
+			{% if loop.index == 20 %}				
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<div class="comment_more" id="{{ list.id }}">
+					<a href="#" id="read_more">+ 더보기 </a>
+				</div>	
+				{% endif %}
+			<input type="hidden" id="top_id" name="top_id" value="0" />
+
+			{% endfor %}
+			{% for list in twitter_list if  20-comment_number %}
+			<li class="cb_thumb_on">
+				<div class="cb_thumb" id="social_photo_image">
+					<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank">
+					{% if list.get('profile_image_url') %}
+					<img src="{{ list.get('profile_image_url') }}" alt="myphoto_twitter"  class="myphoto" />
+					{% else %}
+					<img src="/images/mypic_twitter.png" alt="myphoto_twitter" class="myphoto" />
+					{% endif %}</a>
+				</div>
+				<div class="cb_comment_area">
+					<div class="cb_info_area">
+						<div class="cb_section">
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+							<span class="cb_nick_name cb_nick_name2">{{ list.get('from_user') }}</span>
+							<span class="cb_date">{{ list.get('created_at') }}</span>
+						</div>
+						
+					</div>
+					<div class="cb_dsc_comment">
+						<p class="cb_dsc">
+							{{ list.get('text')|create_id_link()|create_link() }}
+						</p>
+					</div>
+				</div>
+			</li>
+			{% endfor %}
+			
+			
+		</ul>	
+		</div>
+
+		<!-- //Comment List -->
+	</div>
+
+		<!-- Content --><!--social_comment_wrap  --><!--
+		<div class="social_comment_wrap" >	
+	<h1 class="social_comment_title">{{ movie_info.title_kor }}</h1>
+	{{ event_info.main_content }}
+	<div class="social_comment_input_area" >
+		<div class="input_area_title">
+			<span class="sns_login">SNS 로그인</span>
+		{% if twitter_profile %}
+			<img src="/images/comment_twitter.png" alt="twitter" class="btn" id="twitter" onclick="get_sns_data('twitter');" />
+		{% else %}
+			<a href="/oauth?twitter" border="0"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+		{% endif %}
+		
+		{% if facebook_profile %}
+			<img src="/images/comment_facebook.png" alt="facebook" class="btn" id="facebook" onclick="get_sns_data('facebook');" />
+		{% else %}
+			<a href="/oauth?facebook"><img src="/images/comment_facebook.png" alt="facebook"/></a>
+		{% endif %}
+		{% if me2day_profile %}
+			<img src="/images/comment_me2day.png" alt="me2day" class="btn" id="me2day" onclick="get_sns_data('me2day');" />
+		{% else %}
+			<a href="/oauth?me2day"><img src="/images/comment_me2day.png" alt="me2day" /></a>
+		{% endif %}
+			<span class="red_color">*</span><span class="text-middle"> SNS 로그인 후 참여 가능합니다.</span>
+			<span style="margin-left:20px;" id="sns_logout"></span>
+		</div>
+		<div class="input_area_contents">
+			<div class="social_comment_myphoto" id="social_photo_image">aaa</div>
+			<input type="hidden" name="service_type" id="service_type" />
+			<input type="hidden" name="movie_id" id="movie_id" value="{{ movie_info.id }}" />
+			<textarea class="social_comment_textarea" name="social_comment" id="social_comment" disabled="disabled" >로그인 후 토크내용 작성이 가능합니다.</textarea>
+			<input type="button" id="talking" class="talking" onclick="post();" />
+		</div>
+	</div>
+	
+
+	<div id="loading" style="clear:both;width:738px;text-align:center;display:none;"><img src="http://inthe-deal.kr/images/loading.gif" /></div>
+		<div id="social_comment_list">
+		{% for list in comment_list%}
+			{% if loop.index == 1 %}<input type="hidden" id="top_id" name="top_id" value="{{ list.id }}" /> {% endif %}
+			<div class="comment_list">
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<dl>
+					<dt>
+						<a href="{{ list.link }}" target="_blank">{% if list.profile_image %}
+						<img src="{{ list.profile_image }}" alt="myphoto_me2day" style="width:60px;height:60px;" class="myphoto" />
+						{% else %}
+						<img src="/images/mypic_me2day.png" alt="myphoto_me2day" class="myphoto" />
+						{% endif %}</a>
+					</dt>
+					<dd class="comment_info">
+						<a href="{{ list.link }}" target="_blank"><img src="/images/comment_{{ list.service }}.png" alt="{{ list.service }}" /></a>
+						<span class="social_comment_name">{{ list.username }} </span>
+						<span class="social_comment_day">{{ list.create_date }}</span>	
+					</dd>
+					<dd class="comment_text">
+						<p>{{ list.content }}</p>
+					</dd>
+				</dl>
+			</div>	
+				{% if loop.index == 20 %}				
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<div class="comment_more" id="{{ list.id }}">
+					<a href="#" id="read_more">+ 더보기 </a>
+				</div>	
+				{% endif %}
+			<input type="hidden" id="top_id" name="top_id" value="0" />				
+			{% endfor %}
+			{% for list in twitter_list if  20-comment_number %}
+				<div class="comment_list">
+					<hr size="1" class="comment_line" color="#cfcfcf"/>
+					<dl>
+						<dt>
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank">{% if list.get('profile_image_url') %}
+							<img src="{{ list.get('profile_image_url') }}" alt="myphoto_twitter" style="width:60px;height:60px;" class="myphoto" />
+							{% else %}
+							<img src="/images/mypic_twitter.png" alt="myphoto_twitter" class="myphoto" />
+							{% endif %}</a>
+						</dt>
+						<dd class="comment_info">
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+							<span class="social_comment_name">{{ list.get('from_user') }} </span>
+							<span class="social_comment_day">{{ list.get('created_at') }}</span>	
+						</dd>
+						<dd class="comment_text">
+							<p>{{ list.get('text')|create_id_link()|create_link() }}</p>
+						</dd>
+					</dl>
+				</div>
+			{% endfor %}			
+		</div>
+</div>-->
+
+		<!-- //Content -->
+		
+		
+
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">	
+	</div>
+</div>
+<!-- 
+<div id="header_bar_end"></div>
+<div style="width:233px;float:left">
+	<div class="movie_talk_title">
+		<h1 class="movie_title"><span style="color:#3b3b3b;">+ - </span>취향토크</h1>
+	</div>
+	<div class="movie_talk_img">
+		<span><img src="{{ movie_info.thumnail }}" alt="핫무비 메인이미지" width="210" height="268" /></span>	
+	</div>
+</div>
+
+<div class="social_comment_wrap" >	
+	<h1 class="social_comment_title">{{ movie_info.title_kor }}</h1>
+	{{ event_info.main_content }}
+	<div class="social_comment_input_area" >
+		<div class="input_area_title">
+			<span class="sns_login">SNS 로그인</span>
+		{% if twitter_profile %}
+			<img src="/images/comment_twitter.png" alt="twitter" class="btn" id="twitter" onclick="get_sns_data('twitter');" />
+		{% else %}
+			<a href="/oauth?twitter" border="0"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+		{% endif %}
+		{% if facebook_profile %}
+			<img src="/images/comment_facebook.png" alt="facebook" class="btn" id="facebook" onclick="get_sns_data('facebook');" />
+		{% else %}
+			<a href="/oauth?facebook"><img src="/images/comment_facebook.png" alt="facebook"/></a>
+		{% endif %}
+		{% if me2day_profile %}
+			<img src="/images/comment_me2day.png" alt="me2day" class="btn" id="me2day" onclick="get_sns_data('me2day');" />
+		{% else %}
+			<a href="/oauth?me2day"><img src="/images/comment_me2day.png" alt="me2day" /></a>
+		{% endif %}
+			<span class="red_color">*</span><span class="text-middle"> SNS 로그인 후 참여 가능합니다.</span>
+			<span style="margin-left:20px;" id="sns_logout"></span>
+		</div>
+		<div class="input_area_contents">
+			<div class="social_comment_myphoto" id="social_photo_image">aaa</div>
+			<input type="hidden" name="service_type" id="service_type" />
+			<input type="hidden" name="movie_id" id="movie_id" value="{{ movie_info.id }}" />
+			<textarea class="social_comment_textarea" name="social_comment" id="social_comment" disabled="disabled" >로그인 후 토크내용 작성이 가능합니다.</textarea>
+			<input type="button" id="talking" class="talking" onclick="post();" />
+		</div>
+	</div>	
+
+	<div id="loading" style="clear:both;width:738px;text-align:center;display:none;"><img src="http://inthe-deal.kr/images/loading.gif" /></div>
+		<div id="social_comment_list">
+		{% for list in comment_list%}
+			{% if loop.index == 1 %}<input type="hidden" id="top_id" name="top_id" value="{{ list.id }}" /> {% endif %}
+			<div class="comment_list">
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<dl>
+					<dt>
+						<a href="{{ list.link }}" target="_blank">{% if list.profile_image %}
+						<img src="{{ list.profile_image }}" alt="myphoto_me2day" style="width:60px;height:60px;" class="myphoto" />
+						{% else %}
+						<img src="/images/mypic_me2day.png" alt="myphoto_me2day" class="myphoto" />
+						{% endif %}</a>
+					</dt>
+					<dd class="comment_info">
+						<a href="{{ list.link }}" target="_blank"><img src="/images/comment_{{ list.service }}.png" alt="{{ list.service }}" /></a>
+						<span class="social_comment_name">{{ list.username }} </span>
+						<span class="social_comment_day">{{ list.create_date }}</span>	
+					</dd>
+					<dd class="comment_text">
+						<p>{{ list.content }}</p>
+					</dd>
+				</dl>
+			</div>	
+				{% if loop.index == 20 %}				
+				<hr size="1" class="comment_line" color="#cfcfcf"/>
+				<div class="comment_more" id="{{ list.id }}">
+					<a href="#" id="read_more">+ 더보기 </a>
+				</div>	
+				{% endif %}
+			<input type="hidden" id="top_id" name="top_id" value="0" />				
+			{% endfor %}
+			{% for list in twitter_list if  20-comment_number %}
+				<div class="comment_list">
+					<hr size="1" class="comment_line" color="#cfcfcf"/>
+					<dl>
+						<dt>
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank">{% if list.get('profile_image_url') %}
+							<img src="{{ list.get('profile_image_url') }}" alt="myphoto_twitter" style="width:60px;height:60px;" class="myphoto" />
+							{% else %}
+							<img src="/images/mypic_twitter.png" alt="myphoto_twitter" class="myphoto" />
+							{% endif %}</a>
+						</dt>
+						<dd class="comment_info">
+							<a href="http://twitter.com/{{ list.get('from_user') }}"  target="_blank"><img src="/images/comment_twitter.png" alt="twitter" /></a>
+							<span class="social_comment_name">{{ list.get('from_user') }} </span>
+							<span class="social_comment_day">{{ list.get('created_at') }}</span>	
+						</dd>
+						<dd class="comment_text">
+							<p>{{ list.get('text')|create_id_link()|create_link() }}</p>
+						</dd>
+					</dl>
+				</div>
+			{% endfor %}			
+		</div>
+	
+</div>-->
+<script type="text/javascript">
+var service_type;
+$(function() {
+	{% if session['oauth_SNS'] %}
+		get_sns_data('{{session['oauth_SNS']}}');
+		console.log('{{session['oauth_SNS']}}');
+		$("#social_comment").removeAttr("disabled");
+		$("#social_comment").val("");
+	{% endif %}
+	
+	{%if request.session['user_id'] %}
+		$("#social_comment").removeAttr("disabled");
+		$("#social_comment").val("");
+	{% endif %}
+	
+	$('.comment_more').live("click",function() {
+		var last_id = $(".comment_more").attr("id");
+		if(last_id!='end'){
+			$.ajax({
+				type: "GET",
+				url: ".",
+				data: "id="+ last_id, 
+				beforeSend:  function() {
+					
+				},
+				success: function(html){
+					$(".comment_more").remove();
+					$("#social_comment_list").append(html);
+				}
+			});
+		}
+		return false;
+	});
+});
+
+function changeImage(service){
+	
+	offImage();
+	var path = service.attr("src").replace('_off','');
+	
+	service.attr({'src':path});
+}
+
+function offImage(){
+
+	var twitter_path = $("#twitter").attr("src");
+	var me2day_path = $("#me2day").attr("src");
+	var facebook_path = $("#facebook").attr("src");
+	if(twitter_path.indexOf('_off') == '-1'){
+		var twitter = $("#twitter").attr("src").replace('.png','_off.png');
+		$("#twitter").attr({'src':twitter});
+	}else if(me2day_path.indexOf('_off') == '-1'){
+		var me2day = $("#me2day").attr("src").replace('.png','_off.png');
+		$("#me2day").attr({'src':me2day});
+	}else if(facebook_path.indexOf('_off') == '-1'){
+		var facebook = $("#facebook").attr("src").replace('.png','_off.png');
+		$("#facebook").attr({'src':facebook});
+	}
+
+}
+
+function get_sns_data(service) {
+	var data = {
+		   service : service
+	};	
+	$.post("/sns_profile/", data, function(result) {
+		var values;
+		if (service == 'facebook') {
+			values = jQuery.parseJSON(result);
+			$('#social_photo_image').html("<img src='http://graph.facebook.com/"+values.id+"/picture/' style='width:40px;height:40px;' />");
+			changeImage($("#facebook"));
+			service_type = "facebook";
+			
+		}
+		else if(service == 'me2day') {
+			values = jQuery.parseJSON(result);
+			$('#social_photo_image').html("<img src='"+values.face+"' style='width:40px;height:40px;' />");
+			changeImage($("#me2day"));
+			service_type = "me2day";
+		}
+		else if(service == 'twitter') {
+			$('#social_photo_image').html("<img src='"+result+"' style='width:40px;height:40px;' />");
+			changeImage($("#twitter"));
+			service_type = "twitter";
+		}
+		$("#service_type").val(service_type);
+		$("#social_comment").removeAttr("disabled"); 
+		$("#social_comment").val("");
+		$("#sns_logout").html("<input type='button' value='로그아웃' onclick=\"sns_logout('"+service_type+"');\" />");
+	});
+}
+
+
+function sns_logout(service) {
+	var data = {
+		   service : service
+	};	
+	$.post("/sns_logout/", data, function(result) {
+		offImage();
+		$("#sns_logout").html("");
+		$('#social_photo_image').html("");
+		$("#social_comment").attr("disabled","disabled"); 
+		$("#social_comment").val("로그인 후 토크내용 작성이 가능합니다.");
+		location.reload();
+	});
+	/*
+	$.ajax({
+		type: "POST",
+		url: "/sns_post/",
+		data: data, 
+		beforeSend:  function() {
+			console.log(data);
+		},
+		success: function(html){
+			$("#sns_logout").html("");
+			$('#social_photo_image').html("");
+			$("#social_comment").attr("disabled","disabled"); 
+			$("#social_comment").val("로그인 후 토크내용 작성이 가능합니다.");
+			offImage();
+			location.reload();
+		},
+		error: function(errorMap, errorList){
+		
+			console.log(errorMap,errorList);
+			alert("비정상적으로 로그아웃되었습니다.");
+			
+		}
+		
+	});*/
+
+	
+}
+
+function post() {
+	if($('#service_type').val() == '') {
+		alert('서비스를 선택하세요.');
+		return false;
+	}
+	if($('#social_comment').val() == '') {
+		alert('내용을 입력하세요.');
+		return false;
+	}
+	
+	$("#top_id").remove();
+	$('#loading').show();
+	$("#talking").attr("disabled","disabled"); 
+	
+
+	var data = {
+		service : service_type,
+		content : $('#social_comment').val(),
+		movie_id : $('#movie_id').val(),
+		top_id : $('#top_id').val()
+	};
+
+	$.ajax({
+			type: "POST",
+			url: "/sns_post/",
+			data: data, 
+			beforeSend:  function() {
+				console.log(data);
+			},
+			success: function(html){
+				$("#social_comment_list").prepend(html);
+				$("#social_comment").val("");
+				$("#talking").removeAttr("disabled"); 
+				$('#loading').hide();
+			},
+			error: function(errorMap, errorList){
+				alert("10초뒤에 글을 작성해주세요. ^^;");
+				$("#social_comment").val("");
+				$("#talking").removeAttr("disabled"); 
+				$('#loading').hide();
+			}
+			
+		});
+/*
+	$.post("/sns_post/", data, function(result) {
+		if(result != 'false') {
+			$("#social_comment_list").prepend(result);
+			$("#social_comment").val("");
+			$("#talking").removeAttr("disabled"); 
+			$('#loading').hide();
+		}
+	});*/
+	
+}
+/*
+{% if 'twitter' in request.GET %}
+	console.log("twitter");
+	get_sns_data('twitter');
+{% elif 'facebook' in request.GET %}
+console.log("facebook");
+	get_sns_data('facebook');
+{% elif 'me2day' in request.GET %}
+console.log("me2day");
+	get_sns_data('me2day');
+{% endif %}*/
+</script>
+{%  endblock %}

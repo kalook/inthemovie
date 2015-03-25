@@ -1,0 +1,39 @@
+<div class="page">
+    {% if digg.page.has_previous %}
+        <a href="/inthe-movie/admin/member/?page={{ digg.page.previous_page_number() }}&search_type={{ request.GET['search_type'] }}&keyword={{ request.GET['keyword'] }}"><</a>
+    {% endif %}
+
+        {% for pnum in digg.begin %}
+            {% if digg.page.number == pnum %}
+                <span class="page_select">{{ pnum }}</span>
+            {% else %}
+                <a href="/inthe-movie/admin/member/?page={{ pnum }}&search_type={{ request.GET['search_type'] }}&keyword={{ request.GET['keyword'] }}">{{ pnum }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if digg.middle %}
+            <span class="continue">...</span>
+            {% for pnum in digg.middle %}
+                {% if digg.page.number == pnum %}
+                    <span class="page_select">{{ pnum }}</span>
+                {% else %}
+                    <a href="/inthe-movie/admin/member/?page=/{{ pnum }}&search_type={{ request.GET['search_type'] }}&keyword={{ request.GET['keyword'] }}">{{ pnum }}</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if digg.end %}
+            <span class="continue">...</span>
+            {% for pnum in digg.end %}
+                {% if digg.page.number == pnum %}
+                    <span class="page_select">{{ pnum }}</span>
+                {% else %}
+                    <a href="/inthe-movie/admin/member/?page={{ pnum }}&search_type={{ request.GET['search_type'] }}&keyword={{ request.GET['keyword'] }}">{{ pnum }}</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    {% if digg.page.has_next %}
+        <a href="/inthe-movie/admin/member/?page={{ digg.page.next_page_number() }}&search_type={{ request.GET['search_type'] }}&keyword={{ request.GET['keyword'] }}">></a>
+    {% endif %}
+</div>

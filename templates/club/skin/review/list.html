@@ -1,0 +1,65 @@
+{%  extends 'base.html' %}
+{%  block title %} 덕스클럽 {% endblock %}
+{%   block content %}
+
+{{ ("club." + code)|get_lnb() }}
+
+{% include '/club/club_title.html' %}
+
+<div id="page_body">
+	<div class="main_body">
+		
+		<div class="event_item_row">
+			<ul>
+			{% for post in posts.object_list %}
+				<li>
+					<a href="/club/{{ code }}/post/{{ post.id }}">
+					
+						<span class="thumb">
+							{% if post.thumnail %}
+							<img src="https://inthe-movie.com/files/{{ code }}/{{ post.thumnail }}"  width="160" height="98" alt="{{ post.title }}" />
+							{% else %}
+							<img src="/images/no15898.png"  width="158" height="98" alt="{{ post.title }}" style="border:1px solid #cccccc;"/>
+							{% endif %}
+						</span>
+						<strong>{{ post.title }}</strong>
+						<a href="/club/{{ code }}/post/{{ post.id }}"><p style="height:31px">{{ post.content|striptags|strrepl(90) }}</p></a>
+					</a>
+					<dl>
+						<dt>작성자</dt>
+						<dd>{{ post.user.nick_name }}</dd>
+					</dl>
+				</li>
+			{% else %}
+				<li style="padding:80px 0px;" class="tCenter">
+					등록된 리뷰가 없습니다.
+				</li>
+			{% endfor %}
+			</ul>
+			
+			<div class="fr" style="margin-top:15px;">
+				<span class="btn_pack medium icon">
+					<span class="add"> </span>
+					<a href="/club/{{ code }}/post">글쓰기</a>
+				</span>
+			</div>
+			{% if digg.last > 1 %}
+			<div>{% include '/club/pagnation.html' %}</div>
+			{% endif %}
+			<div class="clear">
+			</div>
+			
+		</div>
+	
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+	
+		
+</div>
+
+
+
+
+{%  endblock %}

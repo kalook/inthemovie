@@ -1,0 +1,70 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+		$("#comment_form").submit(function(e) {
+			
+			
+			var content = $('#comment_content').val();
+			if(content.length<1) {
+				alert('댓글내용을 입력하세요.');
+				$('#comment_content').focus();
+				return false;
+			}
+			
+			
+			$.ajax({
+				type : "POST",
+				url : "/club/comment/request",
+				data : $(this).serialize(),
+				success:function(result){
+				
+						$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+						$('#comment_content').val('');
+						$('#comment_content').focus();
+					
+				},
+				error:function(){
+					alert("실패");
+				}
+			});
+			e.preventDefault();
+			return false;
+
+		});
+	});
+	function delete_comment(code, idx) {
+		$.get("/club/comment/delete/"+code+"/"+idx, function(result) {
+			if(result == 'fail') {
+				alert('삭제할 권한이 없습니다.');
+			}
+			else if(result == 'false') {
+				alert('삭제에 실패했습니다.');
+			}
+			else if(result == 'success') {
+				$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+			}
+		});
+	}
+	function edit_comment(code, idx) {
+		$.get("/club/comment/edit/"+code+"/"+idx, function(result) {
+			if(result == 'fail') {
+				alert('오류가 있습니다.');
+			}
+			else {
+				$("#edit_"+idx).html(result);
+			}
+		});
+	}
+	function comment_edit_post(idx) {
+		var data = {
+			code	: $("#code_"+idx).val(),
+			idx		: $("#idx_"+idx).val(),
+			content		: $("#content_"+idx).val()
+		};
+		$.post("/club/comment/edit/"+data.code+"/"+data.idx+"/",data, function (result) {		
+			if(result == 'success') {
+				$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+			}
+		});
+	}
+</script>

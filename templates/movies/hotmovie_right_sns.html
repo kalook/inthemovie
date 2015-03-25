@@ -1,0 +1,14 @@
+{%for sns in sns_list%}
+<li style="border-bottom:1px solid #ccc; padding:7px 10px;{%if request.GET['date'] != "" %}display:none" class="slidedown{% endif %}" data="{{sns.created_at}}">
+	<img src="/image_proxy/?u={{sns.thumbnail_url|base64encode()}}" width="40" height="40" class="fl" alt="썸네일" style="border:1px solid #ccc;" />
+	<div style="position:relative; padding-left:50px; font-size:0.9em">
+		<span style="color:#333;">{{sns.user_name}}</span>
+		<span>{{sns.created_at}}</span>					
+	</div>
+	<p style="position:relative; padding-left:50px; color:#555;">
+		{{sns.contents}}
+	</p>
+	<div class="clear">
+	</div>
+</li>
+{% endfor %}			

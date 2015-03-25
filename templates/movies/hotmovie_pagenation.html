@@ -1,0 +1,41 @@
+{% if digg.last > 1 %}
+<div class="paginate_regular">
+	{% if digg.page.has_previous and (digg.page.previous_page_number() > 0) %}
+	<a href="/{{ title }}/{{ hotmovie_menu }}/page/{{ digg.page.previous_page_number() }}" class="direction"><span>‹</span> 이전</a>
+	{% endif %}
+	
+	{% for pnum in digg.begin %}
+		{% if digg.page.number == pnum %}
+		<strong>{{ pnum }}</strong>
+		{% else %}
+		<a href="/{{ title }}/{{ hotmovie_menu }}/page/{{ pnum }}">{{ pnum }}</a>
+		{% endif %}
+	{% endfor %}
+	
+	{% if digg.middle %}
+		<span class="continue">...</span>
+		{% for pnum in digg.middle %}
+			{% if digg.page.number == pnum %}
+			<strong>{{ pnum }}</strong>
+			{% else %}
+			<a href="/{{ title }}/{{ hotmovie_menu }}/page/{{ pnum }}">{{ pnum }}</a>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	
+	{% if digg.end %}
+		<span class="continue">...</span>
+		{% for pnum in digg.end %}
+			{% if digg.page.number == pnum %}
+			<strong>{{ pnum }}</strong>
+			{% else %}
+			<a href="/{{ title }}/{{ hotmovie_menu }}/page/{{ pnum }}">{{ pnum }}</a>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+		
+	{% if digg.page.has_next and digg.last >= digg.page.next_page_number() %}
+	<a href="/{{ title }}/{{ hotmovie_menu }}/page/{{ digg.page.next_page_number() }}" class="direction">다음 <span>›</span></a>
+	{% endif %}
+</div>
+{% endif %}

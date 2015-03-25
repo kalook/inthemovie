@@ -1,0 +1,55 @@
+{%  extends 'hotmovie_base.html' %}
+{%  block title %} hotmovie {% endblock %}
+{%  block sub_menu %} 
+{% endblock %}
+{%   block content %}
+
+{% include '/movies/hotmovie_top_area.html' %}
+
+<div class="basic_gap">&nbsp;</div>
+
+<div class="sub_title" style="width:680px;">
+	<h2><img src="/images/hotmovie/page_title_blog.png" alt="블로그" /></h2>
+	<span class="more">총  {{ blog_count }} 건</span>
+	<div class="clear">
+	</div>
+</div>
+
+<div id="page_body">
+	<div class="main_body">
+	<div class="event_item_row">
+			<ul>
+			{% for post in posts.object_list %}
+				<li>
+					<a href="/link_proxy/?u={{ post.link_url|base64encode() }}" target="_blank">
+					
+						<span class="thumb">
+							{% if post.thumnail %}
+							<img src="{{ post.link_url }}"  width="160" height="98" alt="사진" />
+							{% else %}
+							<img src="/images/noblog.png"  width="158" height="98" alt="사진" style="border:1px solid #cccccc;"/>
+							{% endif %}
+						</span>
+						<strong style="color:#777777">{{ post.subject[:100] }}</strong>
+						<a href="#"><p style="height:31px;overflow:hidden">&nbsp;</p></a>
+					</a>
+					
+				</li>
+			{% else %}
+				<li style="padding:80px 0px;" class="tCenter">
+					등록된 리뷰가 없습니다.
+				</li>
+			{% endfor %}
+			</ul>
+	</div>
+	<div>{% include '/movies/hotmovie_pagenation.html' %}</div>
+		
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+
+{%  endblock %}

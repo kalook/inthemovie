@@ -1,0 +1,100 @@
+{%  extends 'base.html' %}
+{%  block title %} 덕스클럽 {% endblock %}
+{%  block external %}
+    <link href="/script/smarteditor/css/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/script/smarteditor/js/HuskyEZCreator.js"></script>
+{% endblock %}
+{%   block content %}
+
+{{ ("club." + code)|get_lnb() }}
+{% include '/club/club_title.html' %}
+
+<div id="page_body">
+	<div class="main_body">
+		<fieldset class="post_write">
+		<form method="post" action="." enctype="multipart/form-data" onsubmit="return _onSubmit(this);">
+			<dl>
+				<dt class="title">제목</dt>
+				<dd class="title "><input type="text" id="title" name="title" /></dd>
+				<dd class="clear"></dd>
+				<dt class="movie_search ">영화명 검색</dt>
+				<dd class="movie_search ">
+					<input type="radio" name="press_movie_name" checked/>영화명 자동완성
+					<input type="text" name="press_name" class="press_input" />
+					<input type="radio" name="press_movie_name"/>영화명 없음
+				</dd>
+				<dd class="clear"></dd>
+				<dt class="thumnail_image">섬네일 이미지</dt>
+				<dd class="thumnail_image">
+					<input type="file" name="thumnail" id="thumnail" class="press_input" />
+				</dd>
+				
+				<dt class="text_wrap"></dt>
+				<dd class="text_wrap"><textarea name="ir1" id="ir1" style="width:680px;height:300px;display:none;"></textarea></dd>
+			</dl>
+
+			<div style="text-align:center">
+				<span class="btn_pack medium icon">
+					<span class="refresh"> </span>
+					<a href="/club/{{ code }}/" >목록</a>
+				</span>
+
+				<span class="btn_pack medium icon" >
+					<span class="add"> </span>
+					<input type="submit" value="글쓰기" />
+				</span>
+			</div>
+
+		</form>
+		</fieldset>
+		<div class="clear"></div>
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	// 이미지업로드 경로
+	var imagepath = "/files/{{ code }}";
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+	    oAppRef: oEditors,
+	    elPlaceHolder: "ir1",
+	    sSkinURI: "/script/smarteditor/SEditorSkin.html",
+	    fCreator: "createSEditorInIFrame",
+		uploadCode: "{{ code }}"
+	});
+	
+	function _onSubmit(elClicked){
+		oEditors.getById["ir1"].exec("UPDATE_IR_FIELD", []);
+		var title = $(frm).find("input[name='title']");
+		var content = $(frm).find("textarea[name='ir1']");
+		var thumnail = $(frm).$('#thumnail');
+		if(!title.val()) {
+			alert('제목을 입력하세요.');
+			title.focus();	
+			return false;
+		}
+		if(!content.val()) {
+			alert('내용을 입력하세요.');
+			content.focus();
+			return false;
+		}
+		if(!thumnail.val()) {
+			alert('썸네일 이미지를 첨부하세요.');
+			thumnail.focus();
+			return false;			
+		}
+		
+		return true;
+	}
+	function insertIMG(irid,fileame){
+		var sHTML = "<a href='https://inthe-movie.com" + imagepath + "/" + fileame + "' target='_blank'>";
+		sHTML += "<img src='https://inthe-movie.com" + imagepath + "/" + fileame + "' border='0'></a>";
+		oEditors.getById[irid].exec("PASTE_HTML", [sHTML]);
+	}
+
+</script>
+{%  endblock %}

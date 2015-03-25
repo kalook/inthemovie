@@ -1,0 +1,102 @@
+{%  extends 'admin_base.html' %}
+{% block external %} 
+    <link href="/script/smarteditor/css/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/script/smarteditor/js/HuskyEZCreator.js"></script>
+	<style>
+	label { 
+	    text-align: right;
+		width:130px;
+		float: left;
+		margin:0px 10px 0px 0px;
+	}
+
+	p { margin-top: 10px; }
+
+	legend { display: none; }
+	fieldset { border:0; }
+	</style>
+{% endblock %}
+{%   block content %}
+	<h3>이메일 발송</h3>
+	<a href="#" onclick="show_mail_send()">메일내용 작성</a>
+	<div id="mail_create">
+    	<form method="post" action=".">
+    	<fieldset>
+			<p>
+				<label>제목 :</label>
+				<input type="text" name="subject" id="subject" style="width:200px;" />
+			</p>
+
+			<p style="padding-left:140px;">
+				본문내용<br />
+        		<textarea name="ir1" id="ir1" style="width:700px; height:250px; display:none;"></textarea>	
+			</p>
+			<p>
+		    	<label>상태 :</label>
+				<input type="radio" name="is_send" id="is_send" value="T" checked />&nbsp;작성완료&nbsp;
+		        <input type="radio" name="is_send" id="is_send" value="P" />&nbsp;발송대기&nbsp;
+			</p>
+			<p>
+				<input type="button" onclick="_onSubmit(this)" value="서버에 전송" />
+			</p>
+		</fieldset>
+    	</form>
+	</div>
+
+	<table class="review_table" width="80%" style="width:900px;margin:50px;">
+		<thead>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>상태</th>
+			<th>시간</th>
+		</tr>
+		</thead>
+		<tbody>
+	{% for email in email_info %}
+		<tr>
+			<td>{{ email.id }}</td>
+			<td style="text-align:left;"><a href="/inthe-movie/admin/email/view?id={{ email.id }}">{{ email.title }}</a></td>
+			<td>{% if email.is_send == 'T' %} 작성완료 
+				{% elif email.is_send == 'P' %} 발송대기 
+				{% elif email.is_send == 'S' %} 발송완료 
+				{% endif %}
+			</td>
+			<td>{{ email.reg_date }}</td>
+		</tr>
+	{% endfor %}
+		</tbody>
+	</table>	
+	
+<script type="text/javascript">
+
+$('#mail_create').hide();
+
+function show_mail_send() {
+	$('#mail_create').slideDown();
+}
+// 이미지업로드 경로
+var imagepath = "/files/email";
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "ir1",
+    sSkinURI: "/script/smarteditor/SEditorSkin.html",
+    fCreator: "createSEditorInIFrame",
+	uploadCode: "email"
+});
+
+function _onSubmit(elClicked){
+	// 에디터의 내용을 에디터 생성시에 사용했던 textarea에 넣어 줍니다.
+	oEditors.getById["ir1"].exec("UPDATE_IR_FIELD", []);
+	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+	elClicked.form.submit();
+}
+function insertIMG(irid,fileame){
+	var sHTML = "<a href='http://{{ request.META['HTTP_HOST'] }}" + imagepath + "/" + fileame + "' target='_blank'>";
+	sHTML += "<img src='http://{{ request.META['HTTP_HOST'] }}" + imagepath + "/" + fileame + "' border='0'></a>";
+	oEditors.getById[irid].exec("PASTE_HTML", [sHTML]);
+}
+
+</script>
+{%  endblock %}

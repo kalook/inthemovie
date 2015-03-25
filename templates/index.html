@@ -1,0 +1,239 @@
+{%  extends 'base.html' %}
+{%  block title %} {% endblock %}
+{% block external %}
+<script>
+$(function(){
+	$("#notice ul").addClass("loading");
+	$.ajax({
+		url:"/notice/",
+		success:function(data){
+			$("#notice ul").removeClass("loading");
+			$("#notice ul").html(data);	
+		}
+	});
+});
+</script>
+{% endblock %}
+{%  block content %}
+<div class="basic_gap">&nbsp;</div>
+<div id="page_visual">
+	<div class="main_body">
+		{{ main_banner.main }}
+	</div>
+	<div id="notice" class="notice aside" >
+		<h3 style="padding-bottom:3px"><img src="/images/title_inthemovienotice.png" alt="intheMOVIE 공지사항" /></h3>
+		<ul class="loading">
+		</ul>
+	</div>
+	<div class="clear">
+	</div>
+</div>
+<div id="page_body">
+	<div class="main_body">
+	
+		<div class="sub_title">
+			<h3><a href="/movies"><img src="/images/body_hot_movie.png" alt="추천 핫무비" /></a></h3>
+			<span class="more"><a href="/movies"><img src="/images/body_more.png" alt="more+" /></a></span>
+			<div class="clear">
+			</div>
+		</div>
+		
+		<div class="movie_info">
+			<div class="fl">
+				<a href="/{{ hot_movie.title_url }}">
+				{% if hot_movie.thumnail %}
+				<img src="https://inthe-movie.com{{ hot_movie.thumnail }}" alt="핫무비 정보 이미지" width="210" height="268" />
+				{% else %}
+				<img src="/images/nohotmovie.png" alt="핫무비 정보 이미지" width="210" height="268" />
+				{% endif %}
+				</a>
+			</div>
+			<div class="ct">
+			
+				<div class="title">
+					
+					<a href="/{{ hot_movie.title_url }}"><h1>{{ hot_movie.title_kor }}</h1></a>
+					{% if hot_movie.title_eng %}
+					<p>({{ hot_movie.title_eng }})</p>
+					{% endif %}
+					{% if 'MSIE 6.0' not in request.META['HTTP_USER_AGENT'] %}
+					<div class="share">
+						<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox addthis_default_style " addthis:url="https://inthe-movie.com/{{ hot_movie.title_url }}" addthis:title="{{ hot_movie.title_kor }}">
+							<a class="addthis_button_preferred_1"></a>
+							<a class="addthis_button_preferred_2"></a>
+							<a class="addthis_button_preferred_3"></a>
+							<a class="addthis_button_preferred_4"></a>
+							<a class="addthis_button_compact"></a>
+							<a class="addthis_counter addthis_bubble_style"></a>
+						</div>
+						<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+						<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dfc0aa00168e545"></script>
+						<!-- AddThis Button END -->
+					</div>
+					{% endif %}
+					
+				</div>
+				
+				<div class="point_result">
+					<ul>
+						<li class="total">
+							<p class="label">종합평점</p>
+							<div class="star_point">
+								<span class="fr">{{ hot_movie.get_avg_rating() }}</span>
+								<div class="star_rating_h"><span style="width:{{ hot_movie.get_avg_rating()|rate_percent }}"></span></div>
+							</div>
+							<div class="clear">
+							</div>
+						</li>
+						<li>
+							<p class="label"><img src="/images/icon_naver.png" align="absmiddle" alt="naver" /></p>
+							<a href="/link_proxy/?u={{ hot_movie.link_naver|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+							<div class="star_point">
+								<span class="fr">{{ hot_movie.rating_naver|rating_roundup() }}</span>
+								<div class="star_rating"><span style="width:{{ hot_movie.rating_naver|rate_percent }}"></span></div>
+							</div>
+							<div class="clear">
+							</div>
+						</li>
+						<li>
+							<p class="label"><img src="/images/icon_daum.png" align="absmiddle" alt="daum" /></p>
+							<a href="/link_proxy/?u={{ hot_movie.link_daum|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+							<div class="star_point">
+								<span class="fr">{{ hot_movie.rating_daum|rating_roundup() }}</span>
+								<div class="star_rating"><span style="width:{{ hot_movie.rating_daum|rate_percent }}"></span></div>
+							</div>
+							<div class="clear">
+							</div>
+						</li>
+						<li>
+							<p class="label"><img src="/images/icon_movist.png" align="absmiddle" alt="movist" /></p>
+							<a href="/link_proxy/?u={{ hot_movie.link_movist|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+							<div class="star_point">
+								<span class="fr">{{ hot_movie.rating_movist|rating_roundup() }}</span>
+								<div class="star_rating"><span style="width:{{ hot_movie.rating_movist|rate_percent }}"></span></div>
+							</div>
+							<div class="clear">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+					
+		<div class="basic_gap">&nbsp;</div>
+			
+		<div class="sub_title">
+			<h3><a href="/events"><img src="/images/body_new_event.png" alt="new! 이벤트" /></a></h3>
+			<span class="more"><a href="/events"><img src="/images/body_more.png" alt="more+" /></a></span>
+			<div class="clear">
+			</div>
+		</div>
+		
+		<!-- 수정 -->
+		<div class="latest_item_col_index_full latest_item_col fl" >
+			<ul>
+				{% for event in event_list %}
+				<li>
+					<a class="single_image" href="/events/view/{{ event.id }}" title="{{ event.subject|strip_tags }}" target="_blank">
+						<span class="thumb"><img src="https://inthe-movie.com/files/events/{{ event.thumnail_image }}" alt="{{ event.subject }}" /></span>
+						<p>[{{ (event.type|event_type) }}] {{ (event.subject|strip_tags)[:20] }}</p>
+					</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+		
+		<div class="basic_gap">&nbsp;</div>
+			
+		<div class="sub_title">
+			<h3><a href="/club"><img src="/images/body_enjoy_ducks_club.png" alt="enjoy! 덕스클럽 / 영화리뷰, 토크, 정보공유, 오프모임 공간" /></a></h3>
+			<span class="more"><a href="/club"><img src="/images/body_more.png" alt="more+" /></a></span>
+			<div class="clear">
+			</div>
+		</div>
+		
+		<div class="fl" >
+			<div class="latest_item_col_index_half latest_item_col fl " >
+				<ul>
+					{% for review in review_list %}
+					<li>
+						<a class="single_image" href="/club/{{ review.board.code }}/post/{{ review.id }}">
+							<span class="thumb">
+	
+						{% if review.thumnail %}
+						<img src="/files/{{ review.board.code }}/{{ review.thumnail}}" width="120" height="90" alt="{{ review.title }}" {% if loop.index > 2 %} style='display:none;' {% endif %} class="club_img_border" />
+						{% else %}
+						<img src="/images/no15898.png" width="120" height="90"  alt="{{ review.title }}" {% if loop.index > 2 %} style='border:0px solid #cccccc;display:none;' {% else %} style="border:0px solid #cccccc;" {% endif %} class="club_img_border" />
+						{% endif %}	
+						</span>
+						<p>{{ (review.title|strip_tags)[:20] }}</p>	
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+				
+			</div>
+			<div class="front_notice fr" >
+				<ul>
+				{% for club in club_list %}
+					<li>
+						<span class="fl"><a href="/club/{{ club.board.code }}/post/{{ club.id }}">[{{ club.board.title }}] {{ club.title|strrepl(13) }}</a></span>
+						<span class="fr">{{ club.reg_date|datetimeformat('%Y.%m.%d') }}</span>
+						<div class="clear">
+						</div>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+		</div>
+		<div class="clear">
+		</div>
+		<div id="banner_facebook">
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+			
+			<div class="fb-like-box" data-href="https://www.facebook.com/inthemovie" 
+				 data-width="680" data-height="450" data-show-faces="false" data-stream="true" data-header="true">
+			</div>
+		</div>
+
+	</div>
+	
+	<div id="right_banners" class="aside">
+		<div id="banner_up" class="">
+		{{ main_banner.right_top }}
+		</div>
+		<div id="banner_down"> 
+		{{ main_banner.right_down }}
+		</div>
+		<div id="banner_down"> 
+			<a href="http://m.likq.kr/inthe_movie" target="_blank"><img src="/images/inthemovie_qr.png" style="border:2px solid #D9D9D9"/></a>
+		</div>
+		<!-- <div id="banner_facebook">
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+			
+			<div class="fb-like-box" data-href="https://www.facebook.com/inthemovie" 
+				 data-width="282" data-height="300" data-show-faces="false" data-stream="true" data-header="true">
+			</div>
+		</div> -->		
+	</div> 
+	<div class="clear">
+	</div>
+</div>
+
+{% endblock %}

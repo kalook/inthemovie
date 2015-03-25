@@ -1,0 +1,19 @@
+@charset "utf-8";
+/*
+#ie_title{font-size:10pt;}
+*/
+.new_evvent_contents a span{*font-size:12px;}
+#notice ul li{padding-bottom:-10px;background-position:0px 5px;*background-position:0px 6px;line-height:100%}
+#total_average table tr td{*font-size:10px;}
+#gray_area table{*margin-top:10px} 
+.movie_title{*float:left}
+.more a{*float:right}
+.event_contents_area .contents_list dd{line-height:18px;*line-height:19px;}
+.event_contents_area .contents_list dd h2{*font-size:10px;*padding:2px 7px 2px 7px;}
+.event_contents_area .contents_list dd span{*font-size:11px;}
+.club_text_margin ul{*padding-top:10px;}
+.club_text_margin ul li{*margin:0px}
+
+.movie_title_area_text ul li{line-height:14px}
+
+.movie_title{*margin-bottom:10px}

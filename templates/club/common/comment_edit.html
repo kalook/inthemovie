@@ -1,0 +1,15 @@
+<td colspan="3">
+<form action="">
+<input type="hidden" name="idx_{{ comment.id }}" id="idx_{{ comment.id }}" value="{{ comment.id }}" />
+<input type="hidden" name="code_{{ comment.id }}" id="code_{{ comment.id }}" value="{{ code }}" />
+<table class="review_table gray_border">
+	<tr>
+		<td class="comment_text">
+			<span class="comment_text_area event_bold">댓글</span>
+			<input type="text" id="content_{{ comment.id }}" name="content_{{ comment.id }}" class="comment_input_text" value="{{ comment.comment }}" />
+			<input type="button" id="comment_edit_submit" onclick="comment_edit_post({{ comment.id }})"; class="share_commit black_border icon right comment_commit_margin"/>
+		</td>
+	</tr>
+</table>
+</form>
+</td>

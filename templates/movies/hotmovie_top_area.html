@@ -1,0 +1,131 @@
+{{ request.META['PATH_INFO']|get_lnb_for_path(movie_info) }}
+<script>
+var sns_lasttime="";
+function load_mixsns(){
+	$.ajax({
+		url:"/{{movie_info.title_url}}/sns/mixsns/?date="+sns_lasttime,
+		success:function(data){
+			$(".sns_realtime ul").removeClass("loading");
+			$(".sns_realtime ul").prepend(data);
+			sns_lasttime=$(".sns_realtime li:first-child").attr("data")
+			if ($(".sns_realtime li").size() > 7){
+				for(var i = $(".sns_realtime li").size(); i >5 ; i--){
+					$(".sns_realtime li:eq("+i+")").remove()
+				}
+			}
+			if ($(".sns_realtime li.slidedown").size() > 0){
+				$(".sns_realtime li.slidedown").slideDown()
+				$(".sns_realtime li.slidedown").removeClass("slidedown");
+			}
+			setTimeout(load_mixsns,30000);
+		},
+		error:function(){
+			setTimeout(load_mixsns,30000);
+		}
+	});
+}
+$(function(){
+
+	$(".sns_realtime ul").addClass("loading");
+	load_mixsns();
+
+});
+</script>
+<div class="basic_gap">&nbsp;</div>
+<div id="page_visual" class="hotmovie">
+	<div class="main_body movie_info">
+		<div class="fl">
+			<a href="/{{ movie_info.title_url }}">
+			{% if movie_info.thumnail %}
+			<img src="https://inthe-movie.com{{ movie_info.thumnail }}" alt="핫무비 정보 이미지" width="210" height="268" />
+			{% else %}
+			<img src="/images/nohotmovie.png" alt="핫무비 정보 이미지" width="210" height="268" />
+			{% endif %}
+			</a>
+		</div>
+		<div class="ct">
+		
+			<div class="title">
+				
+				<a href="/{{ movie_info.title_url }}"><h1>{{ movie_info.title_kor }}</h1></a>
+				{% if movie_info.title_eng %}
+				<p>({{ movie_info.title_eng }})</p>
+				{% endif %}
+				{% if 'MSIE 6.0' not in request.META['HTTP_USER_AGENT'] %}
+				<div class="share">
+					<!-- AddThis Button BEGIN -->
+					<div class="addthis_toolbox addthis_default_style " addthis:url="https://inthe-movie.com/{{ movie_info.title_url }}" addthis:title="{{ movie_info.title_kor }}" style="width:150px">
+						<a class="addthis_button_preferred_1"></a>
+						<a class="addthis_button_preferred_2"></a>
+						<a class="addthis_button_preferred_3"></a>
+						<a class="addthis_button_preferred_4"></a>
+						<a class="addthis_button_compact"></a>
+						<a class="addthis_counter addthis_bubble_style"></a>
+					</div>
+					<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+					<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dfc0aa00168e545"></script>
+					<!-- AddThis Button END -->
+				</div>
+				{% endif %}
+				
+			</div>
+			
+			<div class="point_result">
+				<ul>
+					<li class="total">
+						<p class="label">종합평점</p>
+						<div class="star_point">
+							<span class="fr">{{ movie_info.get_avg_rating() }}</span>
+							<div class="star_rating_h"><span style="width:{{ movie_info.get_avg_rating()|rate_percent }}"></span></div>
+						</div>
+						<div class="clear">
+						</div>
+					</li>
+					<li>
+						<p class="label"><img src="/images/icon_naver.png" align="absmiddle" alt="naver" /></p>
+						<a href="/link_proxy/?u={{ movie_info.link_naver|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+						<div class="star_point">
+							<span class="fr">{{ movie_info.rating_naver|rating_roundup() }}</span>
+							<div class="star_rating"><span style="width:{{ movie_info.rating_naver|rate_percent }}"></span></div>
+						</div>
+						<div class="clear">
+						</div>
+					</li>
+					<li>
+						<p class="label"><img src="/images/icon_daum.png" align="absmiddle" alt="daum" /></p>
+						<a href="link_proxy/?u={{ movie_info.link_daum|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+						<div class="star_point">
+							<span class="fr">{{ movie_info.rating_daum|rating_roundup() }}</span>
+							<div class="star_rating"><span style="width:{{ movie_info.rating_daum|rate_percent }}"></span></div>
+						</div>
+						<div class="clear">
+						</div>
+					</li>
+					<li>
+						<p class="label"><img src="/images/icon_movist.png" align="absmiddle" alt="movist" /></p>
+						<a href="/link_proxy/?u={{ movie_info.link_movist|base64encode() }}" target="_blank" class="fr"> 바로가기 <span>›</span> </a>
+						<div class="star_point">
+							<span class="fr">{{ movie_info.rating_movist|rating_roundup() }}</span>
+							<div class="star_rating"><span style="width:{{ movie_info.rating_movist|rate_percent }}"></span></div>
+						</div>
+						<div class="clear">
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			
+		</div>
+	</div>
+	<div class="aside">
+		<div class="sns_realtime" style="background:#ffffff; height:268px; overflow:hidden;">
+			<ul>
+				
+				
+			</ul>
+		</div>
+	</div>
+	<div class="dummy"><div>&nbsp;</div></div>
+	<div class="clear">
+	</div>
+</div>

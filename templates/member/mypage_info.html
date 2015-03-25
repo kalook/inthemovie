@@ -1,0 +1,106 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 회원정보 {% endblock %}
+{%  block content %}
+
+{{ "member.info" | get_lnb(session) }}
+
+<h1 class="page_title">
+</h1>
+
+<div id="page_body">
+	<div class="main_body">
+	
+		<form method="post" action=".">
+		    <input type="hidden" name="user_id" id="id_user_id" value="{{ session.user_id }}" />
+			<table class="mypage_table" width="690px">
+				<tr>
+					<th>아이디</th>
+					<td>
+						{{ session.user_id }}
+					</td>
+				</tr>
+				<tr>
+					<th>기존 패스워드</th>
+					<td>
+						<input type="password" id="password_now" name="password_now" class="login_input join_input" />
+						<span class="red">* 영문, 숫자만 이용가능(6자이상)</span>
+					</td>
+				</tr>		
+				<tr>
+					<th>패스워드</th>
+					<td>
+						<input type="password" id="password" name="password" class="login_input join_input" />
+						<span class="red">* 영문, 숫자만 이용가능(6자이상)</span>
+					</td>
+				</tr>
+				<tr>
+					<th>패스워드 확인</th>
+					<td>
+						<input type="password" id="password_re" name="password_re" class="login_input join_input" />
+					</td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td>
+						<input type="text" id="name" name="name" class="login_input join_input" value="{{ user_info.name }}" />
+					</td>
+				</tr>
+				<tr class="no_border_th no_border">
+					<th>닉네임</th>
+					<td>
+						<input type="text" id="nick_name" name="nick_name" class="login_input join_input" value="{{ user_info.nick_name }}" />
+						<input type="button" class="bt_overlap icon"/>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><p>
+						<span class="red clear">* 공백없이 한글,영문,숫자만 입력 가능합니다.</span>
+						</p>
+						<p>
+						<span class="red clear">* 등록하신 닉네임은 IN THE-MOVIE내에서 사용하게 됩니다.</span>
+						</p></td>
+				</tr>
+				<tr>
+					<th>이메일주소</th>
+					<td>
+						<input type="text" id="email" name="email" class="login_input join_input" value="{{ user_info.email }}" />
+					</td>
+				</tr>
+				
+				<tr class="no_border">
+					<th>핸드폰번호</th>
+					<td>
+						<input type="text" id="mobile_phone" name="mobile_phone" class="login_input join_input" value="{{ user_info.mobile_phone }}" />
+					</td>
+				</tr>
+			</table>
+			
+			<p id="button" class="tCenter" >
+				<input type="submit" class="bt_modify icon" value=""/>
+			</p>
+			</div>
+		</form>
+
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+{% if errors %}
+<script type="text/javascript">
+	alert('{{ errors[0] }}');
+</script>
+{% endif %}
+{% if result %}
+<script type="text/javascript">
+	alert('{{ result[0] }}');
+</script>
+{% endif %}
+
+{%  endblock %}
+
+
+
+

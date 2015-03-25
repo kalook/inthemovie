@@ -1,0 +1,45 @@
+{%  extends 'admin_base.html' %}
+{% block external %}
+	<style>
+	label { 
+	    text-align: right;
+		width:130px;
+		float: left;
+		margin:0px 10px 0px 0px;
+	}
+
+	p { margin-top: 10px; }
+
+	legend { display: none; }
+	fieldset { border:0; }
+	</style>
+{% endblock %}
+{%   block content %}
+    <h3>게시판 관리</h3>
+
+    <form method="post" action=".">
+    <fieldset>
+    <p>
+    	<label>이름 :</label>
+        <input type="text" name="title" id="title" />
+	</p>
+	<p>
+		<label>코드 :</label>
+		<input type="text" name="code" id="code" />
+	</p>
+	<p>
+		<label>게시판 타입</label>
+		<select name="type" id="type">
+			<option value="normal">기본</option>
+			<option value="event">이벤트</option>
+			<!--<option value="webzine">웹진</option>
+			<option value="gallery">갤러리</option>-->
+			<option value="review">리뷰</optopn>
+		</select>
+	</p>
+	<p>
+		<input type="submit" value=" 게시판 생성 " />
+	</p>
+	</fieldset>
+    </form>
+{%  endblock %}

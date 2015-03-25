@@ -1,0 +1,70 @@
+{%  extends 'base.html' %}
+{%  block title %} 덕스클럽 {% endblock %}
+{%   block content %}
+{{ ("club." + code)|get_lnb() }}
+
+
+{% include '/club/club_title.html' %}
+
+
+<div id="page_body">
+
+	<div class="main_body">
+		<fieldset class="post_list">
+			<legend>게시판 리스트</legend>
+			<table cellpadding="0" cellspacing="0">
+				<colgroup>
+					<col width="" />
+					<col width="80" />
+					<col width="100" />
+					<col width="60" />
+				</colgroup>
+				<tr>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<th>게시일</th>
+					<th>조회수</th>
+				</tr>
+				{% for post in posts.object_list %} 
+				<tr>
+					<td class="tLeft"><a href="/club/{{ code }}/post/{{ post.id }}">{{ post.title }}</a></td>
+					<td class="tCenter">{{ post.user.nick_name }}</td>
+					<td class="tCenter numeric">{{ post.reg_date|datetimeformat('%Y. %m. %d') }}</td>
+					<td class="tCenter numeric">{{ post.readed_count }}</td>
+				</tr>
+				{% else %}
+				<tr>
+					<td colspan="4" style="padding:80px 0px">
+						글이 없습니다.
+					</td>
+				</tr>		
+				{% endfor %}
+			</table>
+		</fieldset>
+		<div>
+			<div class="fr" style="margin-top:15px;">
+				<span class="btn_pack medium icon">
+					<span class="add"> </span>
+					<a href="/club/{{ code }}/post">글쓰기</a>
+				</span>
+			</div>
+			{% if digg.last > 1 %}
+			<div>{% include '/club/pagnation.html' %}</div>
+			{% endif %}
+			<div class="clear">
+			</div>
+		</div>
+	</div>
+	
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	
+	<div class="clear">
+	</div>
+	
+</div>
+
+
+
+
+
+{%  endblock %}

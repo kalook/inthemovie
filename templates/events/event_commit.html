@@ -1,0 +1,20 @@
+<div class="enter_area" >
+	<input type="hidden" name="user_id" id="user_id" value="{{ session.user_id }}" />
+	<input type="hidden" name="evt_id" id="evt_id" value="{{ view.id }}" />
+	<input type="hidden" name="type" id="type" value="{{ view.type }}" />
+{% if request_info %}
+	{% include '/events/event_request_list.html' %}
+{% else %}
+	{% if session.user_id %}
+	{% if view.comment_type == 'T' %}
+	<textarea name="comment" id="comment" style="width:300px;height:35px;"></textarea>
+	{% endif %}
+	<a href="#" id="evt_request" name="evt_request"><img src="/images/event/pic_enter.png" class="black_border" alt="응모하기" /></a>
+	{% else %}
+	<div class="enter">
+	<span class="enter_font red">로그인 후 응모 가능합니다</span>
+	</div>
+	{% endif %}
+{% endif %}
+
+</div>

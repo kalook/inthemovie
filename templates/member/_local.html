@@ -1,0 +1,42 @@
+<div id="sub_nb">
+	<ul>
+		<li{% if c == 'point' %} class="selected"{% endif %}>
+			<a href="/user/{{obj.user_id}}/point/" class="rollover">
+				<img src="/images/mypage/mypage_point.png" alt="포인트" />
+				<img src="/images/mypage/mypage_point_on.png" alt="포인트" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'message' %} class="selected"{% endif %}>
+			<a href="/user/{{obj.user_id}}/message/" class="rollover">
+				<img src="/images/mypage/mypage_message.png" alt="메시지" />
+				<img src="/images/mypage/mypage_message_on.png" alt="메시지" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'oauth' %} class="selected"{% endif %}>
+			<a href="#" class="rollover">
+				<img src="/images/mypage/mypage_oauth.png" alt="외부연동설정" />
+				<img src="/images/mypage/mypage_oauth_on.png" alt="외부연동설정" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'info' %} class="selected"{% endif %}>
+			<a href="/user/{{obj.user_id}}/info/" class="rollover">
+				<img src="/images/mypage/mypage_modify.png" alt="개인정보수정" />
+				<img src="/images/mypage/mypage_modify_on.png" alt="개인정보수정" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'drop' %} class="selected"{% endif %}>
+			<a href="/user/{{obj.user_id}}/dropout/" class="rollover">
+				<img src="/images/mypage/mypage_drop.png" alt="회원탈퇴" />
+				<img src="/images/mypage/mypage_drop_on.png" alt="회원탈퇴" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+	</ul>
+	<div class="b_line">
+		<div>&nbsp;</div>
+	</div>
+</div>

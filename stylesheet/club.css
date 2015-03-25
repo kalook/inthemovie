@@ -1,0 +1,97 @@
+/*클럽시작*/
+/*임시테스트*/
+div.main_talk_wrap{width:668px;height:268px;background:#ffffff;border:0px solid red;position:absolute;margin:6px;}
+div.out_1{width:132px;height:212px;background:url(/images/club/club_talks_1.png);z-index:100;position:absolute;left:9px;top:56px;}
+div.over_1{background:url(/images/club/club_talks_1_over.png);font-weight:700;color:#3d3d3d}
+div.out_2{width:132px;height:193px;background:url(/images/club/club_talks_2.png);position:absolute;left:81px;top:75px;z-index:10;}
+div.over_2{background:url(/images/club/club_talks_2_over.png);font-weight:700;color:#3d3d3d}
+div.out_3{width:132px;height:161px;background:url(/images/club/club_talks_3.png);position:absolute;left:157px;top:107px;z-index:10;}
+div.over_3{background:url(/images/club/club_talks_3_over.png);font-weight:700;color:#3d3d3d}
+div.out_4{width:132px;height:210px;background:url(/images/club/club_talks_4.png);position:absolute;left:217px;top:58px;z-index:10;}
+div.over_4{background:url(/images/club/club_talks_4_over.png);font-weight:700;color:#3d3d3d}
+div.out_5{width:147px;height:182px;background:url(/images/club/club_talks_5.png);position:absolute;left:286px;top:86px;z-index:10;}
+div.over_5{background:url(/images/club/club_talks_5_over.png);font-weight:700;color:#3d3d3d}
+div.out_6{width:132px;height:225px;background:url(/images/club/club_talks_6.png);position:absolute;left:356px;top:43px;z-index:20;}
+div.over_6{background:url(/images/club/club_talks_6_over.png);font-weight:700;color:#3d3d3d}
+div.out_7{width:132px;height:172px;background:url(/images/club/club_talks_7.png);position:absolute;left:436px;top:96px;z-index:20;}
+div.over_7{background:url(/images/club/club_talks_7_over.png);font-weight:700;color:#3d3d3d}
+div.out_8{width:132px;height:182px;background:url(/images/club/club_talks_8.png);position:absolute;left:504px;top:86px;z-index:30;}
+div.over_8{background:url(/images/club/club_talks_8_over.png);font-weight:700;color:#3d3d3d}
+div.out_9{width:132px;height:235px;background:url(/images/club/club_talks_9.png);position:absolute;left:529px;top:33px;z-index:40;}
+div.over_9{background:url(/images/club/club_talks_9_over.png);font-weight:700;color:#3d3d3d}
+
+
+.in{width:104px;height:60px;padding-top:7px;margin-left:10px;font-size:1em;text-align:left;word-wrap:break-word;word-break:break-all;overflow-x:auto;overflow-y:hidden;}
+.in span{width:104px;height:45px;}
+.club_people_text{width:290px;height:20px;z-index:2000;position:absolute;font-size:1.1em;margin-left:20px;top:10px;}
+.play{font-size:0.6em}
+
+.bt_center input{float:left;margin-right:5px}
+.bt_center{width:140px;margin:0 auto;padding-top:10px}
+.red_border{border:6px solid #c62c2c}
+
+.club_notice{width:293px;height:103px;background:#ffffff;float:right;margin-top:6px;margin-right:6px;}
+.club_list_text{height:73px;margin:10px 0px 10px 20px}
+.club_list_text li{font-size:0.8em;list-style-image:url(/images/hotmovie/dot.png);margin-bottom:8px}
+.club_off{width:293px;height:159px;background:#ffffff;float:right;margin-top:6px;margin-right:6px;clear:both;}
+.club_off.club_sub_title{width:2px;}
+.club_sub_title{width:333px;}
+.club_sub_title_plus{width:272px;margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:14px;}
+.club_sub_title_plus .movie_title{font-size:1.1em;}
+.club_sub{width:680px}
+.club_movie_review{width:340px;height:101px;background:#f5f5f5;margin-top:8px;margin-bottom:36px;}
+.club_movie_review img{float:left}
+.club_bg_none{background:transparent}
+.club_text_margin ul{padding-top:10px;}
+.no_list_style{list-style:none}
+.club_img_border{border:1px solid #d0d0d0}
+
+.press_table{width:100%;border-top:3px solid #cfcfcf;border-bottom:3px solid #cfcfcf;font-size:0.7em;border-collapse:collapse}
+.press_border{border-bottom:3px solid #cfcfcf}
+.press_table td{border-bottom:1px solid #cfcfcf;height:32px}
+.press_table th{width:83px;border-bottom:1px solid #cfcfcf;height:32px;color:#3b3b3b;padding-left:13px}
+.press_input{width:348px;height:18px}
+
+.press_table textarea{border:0;width:100%;height:300px;padding-left:13px;padding-top:13px}
+
+.club_movie_review_main{font-size:0.7em;magin-left:10px}
+.club_movie_review_main{padding-top:6px}
+.club_movie_review_main div a{padding:3px}
+.club_movie_review_main div a{width:162px;float:left;height:13px;margin-top:3px;margin-left:10px;}
+.club_movie_review_main div a:hover{width:162px;background:#c62c2c;color:#ffffff}
+
+
+.review_select a{color:#ffffff;background:#c62c2c;}
+.bt_club{background:#c62c2c}
+.club_table{border-top:3px solid #cfcfcf}
+.club_press {float:left;margin-top:10px;margin-bottom:10px}
+.club_press dt{float:left;margin-right:10px}	
+.club_press dd{margin-bottom:8px;width:487px}
+.club_press dd h1{text-align:left;font-size:1.2em;color:#c62c2c;}
+.club_press dd p{text-align:left;line-height:1.28em}
+.club_press dd a{float:left;padding:2px 7px}
+.club_writer{background:#3b3b3b;padding:2px 7px;color:#ffffff;float:left;margin-right:3px}
+
+.club_press_view{width:100%;height:120px;background:#f5f5f5;margin-top:10px;margin-bottom:10px;padding-top:9px;padding-left:9px;color:#3b3b3b;}
+.club_press_view,dt,dd,h1,h2{float:left}
+.club_press_view dd{margin-bottom:10px}
+.club_press_view dt{margin-right:9px}
+.club_press_view h1{font-size:1.3em}
+.club_press_view h2{font-size:0.9em;padding-top:5px}
+.club_view_total_average dt,dd{margin-right:17px}
+.club_view_total_average span{float:left}
+.club_table_content{width:350px;border-collapse:collapse;font-size:0.89em;margin-top:-10px;}
+.club_table_content tr{height:18px}
+.club_table_content td{height:20px;text-align:left;vertical-align:top;border:0;padding-left:5px;}
+.club_table_content th{height:20px;background:transparent;color:#3b3b3b;font-weight:900;text-align:left;vertical-align:top;}
+
+.club_star_on{width:13px;height:12px;background:url(/images/club/icon_star_on.png);margin-right:2px;}
+.club_star_off{width:13px;height:12px;background:url(/images/club/icon_star_off.png)}
+
+.bt_align input{margin-left:5px}
+.bt_margin input{margin-left:5px}
+.bt_down{width:63px;height:23px;background:url(../images/event/pic_down_text.png)}
+.bt_write{width:63px;height:23px;background:url(../images/event/pic_write.png)}
+.bt_modify{width:63px;height:23px;background:url(../images/event/bt_modify.png)}
+.bt_delete{width:63px;height:23px;background:url(../images/event/bt_delete.png)}
+/*클럽 끝*/

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %} 이벤트 {% endblock %}
+{% block content %}
+{{ "events.available"|get_lnb() }}
+
+<h1 class="page_title">
+	<img src="/images/event/title_available.png" alt="진행중인이벤트" />
+</h1>
+
+<div id="page_body">
+	<div class="main_body">
+	
+		<ul class="tab_menu">
+			<li class="{% if type == 'all' %} selected{% endif %}"><a href="/events/">전체</a></li>
+			<li class="{% if type == 'preview' %} selected{% endif %}"><a href="/events/preview">시사회</a></li>
+			<li class="{% if type == 'reserve' %} selected{% endif %}"><a href="/events/reserve">예매권</a></li>
+			<li class="{% if type == 'show' %} selected{% endif %}"><a href="/events/show">공연</a></li>
+			<li class="{% if type == 'etc' %} selected{% endif %}"><a href="/events/etc">기타</a></li>
+		</ul>
+
+		<div class="event_item_row">
+			<ul>
+			{% for list in event_list %}
+				<li>
+					{% if list.req_type == 'social' %}
+					<a href="/{{ list.movie.title_url }}/vlaah">
+					{% else %}
+					<a href="/events/view/{{ list.id }}">
+					{% endif %}
+						<span class="thumb">
+							{% if list.thumnail_image %}
+							<img src="https://inthe-movie.com/files/events/{{ list.thumnail_image }}"  width="160" height="98" alt="{{ list.subject }}" />
+							{% else %}
+							<img src="/images/no15898.png"  width="160" height="98" alt="{{ list.subject }}" style="border:1px solid #cccccc;"/>
+							{% endif %}
+						</span>
+						<strong>{{ list.subject }}</strong>
+					</a>
+					<dl>
+						<dt>일시</dt>
+						<dd>{{ list.date }}</dd>
+						<dt>인원</dt>
+						<dd class="short">{{ list.people }}</dd>
+						<dt>장소</dt>
+						<dd>{{ list.place }}</dd>
+						<dt>발표</dt>
+						<dd class="short">{{ list.announce }}</dd>
+					</dl>
+				</li>
+			{% else %}
+				<li style="padding:80px 0px;" class="tCenter">
+					진행중인 이벤트가 없습니다.
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+{%  endblock %}

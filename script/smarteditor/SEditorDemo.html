@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>스마트에디터 데모 페이지</title>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/HuskyEZCreator.js" charset="utf-8"></script>
+</head>
+<body>
+
+<form name="w_form" method="post" action="SEditorInsert.asp" onsubmit="return form_check(this)">
+<textarea name="content1" style="display:none"></textarea>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#DEDEDE">
+  <tr valign="top">
+    <td height="250" bgcolor="#FFFFFF"><textarea name="ir1" id="ir1" style="width:100%;height:200px;display:none;">내용</textarea></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr height="80">
+    <td align="center"><input name="image" type="image" src="/img/admin/btn/register.gif" align="absmiddle" border="0"></td>
+  </tr>
+</table>
+</form>
+
+<script language="javascript">
+<!--
+  // 이미지업로드 경로
+  var imagepath = "/file/demo";
+
+  var oEditors = [];
+  nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "ir1",
+    sSkinURI: "SEditorSkin.html",
+    fCreator: "createSEditorInIFrame"
+  });
+
+  // 복수개의 에디터를 생성하고자 할 경우
+  /*
+  nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "ir2",
+    sSkinURI: "SEditorSkin.html",
+    fCreator: "createSEditorInIFrame"
+  });
+  */
+
+  // 이미지삽입 함수 imgupload_pro.asp 에서 호출
+  function insertIMG(irid,fileame){
+    var sHTML = "<img src='" + imagepath + "/" + fileame + "' border='0'>";
+    oEditors.getById[irid].exec("PASTE_HTML", [sHTML]);
+  }
+
+  // HTML삽입 예제
+  function pasteHTMLDemo(){
+    sHTML = "<span style='color:#FF0000'>이미지 등도 이렇게 삽입하면 됩니다.</span>";
+    oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+  }
+
+  // HTML보기 예제
+  function showHTML(){
+    alert(oEditors.getById["ir1"].getIR());
+  }
+
+  function form_check(form){
+    oEditors.getById["ir1"].exec("UPDATE_IR_FIELD", []);
+    form.content1.value = document.getElementById("ir1").value;
+
+    if(!chkNull(form.content1, "\'내용\'을 입력해 주세요")) return false;
+
+    var msg = "등록하시겠습니까?"
+    if(confirm(msg)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+-->
+</script>
+
+</body>
+</html>

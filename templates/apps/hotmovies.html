@@ -1,0 +1,30 @@
+{%  extends 'app_base.html' %}
+{% block external %}
+	<script src="https://connect.facebook.net/en_US/all.js"></script>
+{%  endblock %}
+{%   block content %}
+<div id="fb-root"></div>
+<script type="text/javascript">
+window.fbAsyncInit = function() {
+	FB.Canvas.setAutoResize();
+};
+window.onload=function() {
+	FB.Canvas.setAutoResize(true,100);
+}
+</script>
+<script type="text/javascript">
+	FB.init({appId:'467964749899108', status: true, cookie: true, xfbml : true});
+</script>
+<div id="page_body">
+	<div>
+		<ul class="tab_menu">
+			<li{% if 'top10' in request.GET %} class="selected"{% elif not request.GET %} class="selected"{% endif %}><a href="/apps/hotmovies?top10">TOP 10</a></li>
+			<li{% if 'premovie' in request.GET %} class="selected"{% endif %}><a href="/apps/hotmovies?premovie">개봉예정작</a></li>
+			<li{% if 'current' in request.GET %}  class="selected"{% endif %}><a href="/apps/hotmovies?current">현재상영작</a></li>
+			<li class="clear">
+			</li>
+		</ul>	
+		{% include '/apps/hot_movies.html' %}
+	</div>
+</div>
+{%  endblock %}

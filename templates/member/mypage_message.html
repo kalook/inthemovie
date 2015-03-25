@@ -1,0 +1,169 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 포인트 {% endblock %}
+{%  block content %}
+{{ "member.message" | get_lnb(session)}}
+
+<h1 class="page_title">
+</h1>
+
+<div id="page_body">
+	<div class="main_body">
+	
+		<ul class="tab_menu">
+			<li class="{% if type == 'recive' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=recive">받은쪽지함</a></li>
+			<li class="{% if type == 'send' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=send">보낸쪽지함</a></li>
+			<li class="{% if type == 'all' %} selected{% endif %}"><a href="/user/{{ session.user_id }}/message/post/">쪽지쓰기</a></li>
+		</ul>
+	
+		<div class="b_line">
+		<div>&nbsp;</div>
+		</div>
+		<div class="event_item_row">
+			<fieldset class="post_list">
+				<legend>게시판 리스트</legend>
+				<table cellpadding="0" cellspacing="0">
+					<colgroup>
+						<col width="50" />
+						<col width="" />
+						<col width="120" />
+						<col width="60" />
+					</colgroup>
+					<tr>
+						<th><input type="checkbox" /></th>
+						<th>상세내역</th>
+						<th>일시</th>
+						<th>확인</th>
+					</tr>
+					{% for list in message_list.object_list %} 
+					<tr>
+						<td class="tLeft"><input type="checkbox" /></td>
+						<td class="tCenter"><a href="/user/{{ session.user_id }}/message/read/{{ list.id }}"> 
+						{% if not list.read_date %}<b>{% endif %}{{ list.content|strrepl(80) }}{% if not list.read_date %}</b>{% endif %}
+	 					</a></td>
+						<td class="tCenter numeric"><a href="#">{{ list.send_date|datetimeformat('%Y.%m.%d') }}</a></td>
+						<td class="tCenter numeric"><a href="#">{% if list.read_date %}확인{% else %}미확인{% endif %}</a></td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="4" style="padding:80px 0px">
+							내역이 없습니다.
+						</td>
+					</tr>		
+					{% endfor %}
+				</table>
+			</fieldset>
+			<div>
+
+			{% if digg.last > 1 %}
+			<div>{% include '/club/pagnation.html' %}</div>
+			{% endif %}
+			<div class="clear">
+			</div>
+		</div>
+		
+
+		</div>
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+
+
+
+<!-- <div class="mypage_point"> -->
+<!-- <div class="point_menu"> -->
+<!-- 	<dl> -->
+<!-- 		<dt><span class="red">{{ session.nick_name }}</span>({{ session.user_id }})님의 쪽지공간</dt> -->
+<!-- 		<dd><div class="point_button{% if request.GET['type'] == 'recive' %} select{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=recive">받은쪽지함</a></div></dd> -->
+<!-- 		<dd><div class="point_button{% if request.GET['type'] == 'send' %} select{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=send">보낸쪽지함</a></div></dd> -->
+<!-- 		<dd><div class="point_button"><a href="/user/{{ session.user_id }}/message/post">쪽지쓰기</a></div></dd> -->
+<!-- 	</dl> -->
+<!-- </div> -->
+<!-- <div class="point_table_area">  -->
+<!-- 	<table class="point_table"> -->
+<!-- 		<thead> -->
+<!-- 			<tr> -->
+<!-- 				<th class="point_division"><input type="checkbox" /></th> -->
+<!-- 				<th class="point_title">상세내역</th> -->
+<!-- 				<th class="point_date">일시</th> -->
+<!-- 				<th class="point_point">확인</th> -->
+<!-- 			</tr> -->
+<!-- 		</thead> -->
+<!-- 		<tbody> -->
+<!-- 		{% for list in message_list.object_list %}  -->
+<!-- 			<tr> -->
+<!-- 				<td><input type="checkbox" /></td> -->
+<!-- 				<td class="point_title_align"> -->
+<!-- 					<a href="/user/{{ session.user_id }}/message/read/{{ list.id }}"> -->
+<!-- 						{% if not list.read_date %}<b>{% endif %}{{ list.content|strrepl(80) }}{% if not list.read_date %}</b>{% endif %} -->
+<!-- 					</a> -->
+<!-- 				</td> -->
+<!-- 				<td><a href="#">{{ list.send_date|datetimeformat('%Y.%m.%d') }}</a></td> -->
+<!-- 				<td><a href="#">{% if list.read_date %}확인{% else %}미확인{% endif %}</a></td> -->
+<!-- 			</tr> -->
+<!-- 		{% else %} -->
+<!-- 			<tr> -->
+<!-- 				<td colspan="4" style="text-align:center;">내역이 없습니다.</td> -->
+<!-- 			</tr> -->
+<!-- 		{% endfor %} -->
+<!-- 		</tbody> -->
+<!-- 		<tfoot> -->
+<!-- 			<tr class="no_border"> -->
+<!-- 				<td colspan="4"> -->
+<!-- 					<dl> -->
+<!-- 						<dt class="page_area"> -->
+<!-- 							{% if digg.last == 1 %} -->
+<!-- 							{% else %} -->
+<!-- 							<div class="page point_page"> -->
+<!-- 							    {% if digg.page.has_previous %} -->
+<!-- 							        <a href="/user/{{ session.user_id }}/message/?type={{ request.GET['type'] }}&page={{ digg.page.previous_page_number() }}"><</a> -->
+<!-- 							    {% endif %} -->
+
+<!-- 							        {% for pnum in digg.begin %} -->
+<!-- 							            {% if digg.page.number == pnum %} -->
+<!-- 							                <span class="page_select">{{ pnum }}</span> -->
+<!-- 							            {% else %} -->
+<!-- 							                <a href="/user/{{ session.user_id }}/message/?type={{ request.GET['type'] }}&page={{ pnum }}">{{ pnum }}</a> -->
+<!-- 							            {% endif %} -->
+<!-- 							        {% endfor %} -->
+
+<!-- 							        {% if digg.middle %} -->
+<!-- 							            <span class="continue">...</span> -->
+<!-- 							            {% for pnum in digg.middle %} -->
+<!-- 							                {% if digg.page.number == pnum %} -->
+<!-- 							                    <span class="page_select">{{ pnum }}</span> -->
+<!-- 							                {% else %} -->
+<!-- 							                    <a href="/user/{{ session.user_id }}/message/?type={{ request.GET['type'] }}&page={{ pnum }}">{{ pnum }}</a> -->
+<!-- 							                {% endif %} -->
+<!-- 							            {% endfor %} -->
+<!-- 							        {% endif %} -->
+
+<!-- 							        {% if digg.end %} -->
+<!-- 							            <span class="continue">...</span> -->
+<!-- 							            {% for pnum in digg.end %} -->
+<!-- 							                {% if digg.page.number == pnum %} -->
+<!-- 							                    <span class="page_select">{{ pnum }}</span> -->
+<!-- 							                {% else %} -->
+<!-- 							                    <a href="/user/{{ session.user_id }}/message/?type={{ request.GET['type'] }}&page={{ pnum }}">{{ pnum }}</a> -->
+<!-- 							                {% endif %} -->
+<!-- 							            {% endfor %} -->
+<!-- 							        {% endif %} -->
+
+<!-- 							    {% if digg.page.has_next %} -->
+<!-- 							        <a href="/user/{{ session.user_id }}/message/?type={{ request.GET['type'] }}&page={{ digg.page.next_page_number() }}">></a> -->
+<!-- 							    {% endif %} -->
+<!-- 							</div> -->
+<!-- 							{% endif %} -->
+<!-- 						</dt> -->
+<!-- 					</dl> -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 		</tfoot> -->
+<!-- 	</table> -->
+<!-- </div> -->
+{%  endblock %}
+
+
+
+

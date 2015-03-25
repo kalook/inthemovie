@@ -1,0 +1,19 @@
+<table class="review_table">
+<tr>
+	<th>신청자</th>
+	<th>신청일</th>
+	<th>IP</th>
+</tr>
+<tr>
+	<td>{{ request_info.user.nick_name }}</td>
+	<td>{{ request_info.req_date|datetimeformat('%Y-%m-%d') }}</td>
+	<td>{{ request_info.ip_addr }}</td>
+</tr>
+{% if request_info.event.comment_type == 'T' %}
+<tr>
+	<th>코멘트</th>
+	<td colspan="2">{{ request_info.comment }}</td>
+</tr>
+{% endif %}
+
+</table>	

@@ -1,0 +1,76 @@
+
+	<div id="wrap">
+		<div id="header">
+			<!--
+ <a href="/"><span id="logo">intheMOVIE</span></a>-->
+			<!--바뀜-------------------------------------------------->
+			<a href="/"><img src="/images/logo_x.png" id="logos" />
+			</a>
+			<!-------------------------------------------------------->
+			<ul id="header_member">
+				{% if session.user_id %}
+				<li id="logout"><a href="/logout">로그아웃</a>
+				</li>
+				<li class="top_small_slider"></li>
+				<li id="mypage"><a href="/user/{{ session.user_id }}">마이페이지</a>
+				</li>
+				<li class="top_small_slider"></li>
+				<li class="login_name">{{ session.nick_name }} 님</li> {% if
+				session.is_admin == 'yes' %}
+				<li class="top_small_slider"></li>
+				<li class="login_name"><a href="/inthe-movie/admin">어드민바로가기</a>
+				</li> {% endif %} {% else %}
+				<li id="join"><a href="/join">회원가입</a>
+				</li>
+				<li class="top_small_slider"></li>
+				<li id="id_pass_search"><a href="/find">아이디비밀번호찾기</a>
+				</li>
+				<li class="top_small_slider"></li>
+				<li id="login"><a
+					href="/login?url={{ request.META['PATH_INFO']|urlencode }}">로그인</a>
+				</li> {% endif %}
+			</ul>
+			<ul id="header_menu">
+				<li id="hotmovie"><a href="/movies">핫무비</a>
+				</li>
+				<li class="top_slider"></li>
+				<li id="event"><a href="/events">이벤트</a>
+				</li>
+				<li class="top_slider"></li>
+				<li id="ducks_club"><a href="/club">덕스클럽</a>
+				</li>
+				<li id="movie_search">
+					<div id="movie_searh_box">
+						<form name="movie_search" id="movie_search" method="get">
+							<input type="text" id="q" name="q" />
+							<a href="#" onclick="">movie_search_icon</a>
+						</form>
+					</div></li>
+				<ul>
+		</div>
+		<div id="header_bar"></div>
+		<div id="main"></div>
+		<div id="footer">
+			<div id="footer_bar"></div>
+			<ul id="footer_link">
+				<li id="footer_inthemovie_info"><a
+					href="http://inthe-movie.tistory.com">intheMovie소개</a>
+				</li>
+				<li id="footer_slider"></li>
+				<li id="footer_individual_information"><a href="/private">개인정보취급방침</a>
+				</li>
+				<li id="footer_slider"></li>
+				<li id="footer_use_information"><a href="/tos">이용약관</a>
+				</li>
+				<li id="footer_slider"></li>
+				<li id="footer_advertice"><a
+					href="mailto:contact@inthe-movie.com">광고 및 제휴안내</a>
+				</li>
+			</ul>
+			<div id="footer_copyright" name="footer_copyright">
+				<span>Copyright ⓒ inthemovie co LTD. ALL RIGHTS RESERVED </span>
+			</div>
+		</div>
+	</div>
+	<!--  {% block content %}{% endblock %} -->
+lock content %}{% endblock %} -->

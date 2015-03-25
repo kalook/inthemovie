@@ -1,0 +1,40 @@
+{%  extends 'base.html' %}
+{%  block title %}  Club :: {{ board.title }} {% endblock %}
+{%  block sub_menu %} 
+    <ul class="club-menu">
+        <li><a href="/club/">클럽 홈</a></li>
+        <li><a href="/club/reporter/">기자단리뷰</a></li>
+        <li><a href="/club/movie/">영화리뷰</a></li>
+        <li><a href="/club/performance/">공연리뷰</a></li>
+        <li><a href="/club/attraction/">극장주변명소</a></li>
+        <li><a href="/club/free/">이러쿵저러쿵</a></li>
+        <li><a href="/club/offmeeting/">오프모임</a></li>
+    </ul> 
+{% endblock %}
+{%  block content %}
+  <h2>{{ board.title }}</h2>
+  <h3>{{ post.title }}</h3>  
+  <p>
+    {{ post.user.nick_name }} |
+    {{ post.reg_date|date:"Y-m-d h:m:s" }} |
+    read : {{ post.readed_count }}
+  </p>
+  <div style="width:700px;border:1px solid #000000;">
+    {% autoescape off %} 
+    {{ post.content }}
+    {% endautoescape %} 
+  </div>
+  
+  <div style="margin-top:10px;">
+    <form method="post" action="">
+    <fieldset>
+        <textarea name="comment_content" id="comment_content" style="width:600px;height:40px;float:left;"></textarea>&nbsp;
+		<input type="submit" style="border:1px;width:92px;height:40px" value=" 댓글쓰기 " />
+    </fieldset>
+    </form>
+  </div>
+  
+  <a href="/club/{{ code }}/">목록</a>&nbsp;&nbsp;
+  <a href="/club/{{ code }}/edit/{{ post.id }}">수정</a>&nbsp;&nbsp;
+  <a href="/club/{{ code }}/delete/{{ post.id }}">삭제</a>
+{%  endblock %}

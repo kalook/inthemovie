@@ -1,0 +1,45 @@
+{%  extends 'admin_base.html' %}
+{%   block content %}
+	<h3>이벤트 관리</h3>
+	<div>
+		<a href="/inthe-movie/admin/event/create">이벤트 생성</a>
+	</div>
+	<div class="review_menu event_menu">
+		<div class="review_button event_button"><a href="/inthe-movie/admin/event/?stat=start">진행중</a></div>
+		<div class="review_button event_button"><a href="/inthe-movie/admin/event/?stat=closed">진행전</a></div>
+		<div class="review_button event_button"><a href="/inthe-movie/admin/event/?stat=end">진행완료</a></div>
+	</div>
+	<div class="event_contents">
+	{% for list in event_list %}
+		<div class="event_contents_area">
+		<dl class="contents_list">
+			<dt>
+				<a href="/inthe-movie/admin/event/view/{{ list.id }}">
+					<img src="/files/events/{{ list.thumnail_image }}"  width="160" height="98" alt="{{ list.subject }}" />
+				</a>
+			</dt>
+			<dd>
+				<a href="/inthe-movie/admin/event/view/{{ list.id }}">
+					<h1>{% if list.status == 'closed' %}
+						[진행전]
+					{% elif list.status == 'start' %}
+						[진행중]
+					{% elif list.status == 'end' %}
+					 	[진행완료]
+					{% endif %}&nbsp;{{ list.subject }}</h1>
+				</a>
+			</dd>
+			<dd><h2>일시</h2><span>{{ list.date }}</span></dd>
+			<dd><h2>장소</h2><span>{{ list.place }}</span></dd>
+			<dd><h2>인원</h2><span>{{ list.people }}</span></dd>
+			<dd><h2>발표</h2><span>{{ list.announce }}</span></dd>
+			{% if not request.GET['stat']=='end'%}
+			<dd><h2>신청수</h2><span><a href="/inthe-movie/admin/event/view/{{ list.id }}/?csv">{{(list.id|event_request_number)}} 명</a></span></dd>
+			{% endif %}
+		</dl>
+		</div>
+		<div class="contents_line"></div>
+	{% endfor %}
+	</div>
+	<div class="contents_line"></div>	
+{%  endblock %}

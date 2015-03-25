@@ -1,0 +1,67 @@
+{%  extends 'app_base.html' %}
+{% block external %}
+	<script src="https://connect.facebook.net/en_US/all.js"></script>
+{%  endblock %}
+{%   block content %}
+<div id="fb-root"></div>
+<script type="text/javascript">
+window.fbAsyncInit = function() {
+	FB.Canvas.setAutoResize();
+};
+window.onload=function() {
+	FB.Canvas.setAutoResize(true,100);
+}
+</script>
+<script type="text/javascript">
+	FB.init({appId:'467964749899108', status: true, cookie: true, xfbml : true});
+</script>
+<div id="page_body">
+	<div style="width:810px;">
+	
+		<ul class="tab_menu">
+			<li class="{% if type == 'all' %} selected{% endif %}"><a href="/apps/events">전체</a></li>
+			<li class="{% if type == 'preview' %} selected{% endif %}"><a href="/apps/events/preview">시사회</a></li>
+			<li class="{% if type == 'reserve' %} selected{% endif %}"><a href="/apps/events/reserve">예매권</a></li>
+			<li class="{% if type == 'show' %} selected{% endif %}"><a href="/apps/events/show">공연</a></li>
+			<li class="{% if type == 'etc' %} selected{% endif %}"><a href="/apps/events/etc">기타</a></li>
+		</ul>
+
+		<div class="event_item_row">
+			<ul>
+			{% for list in event_list %}
+				<li>
+					{% if list.req_type == 'social' %}
+					<a href="/{{ list.movie.title_url }}/vlaah" target="_blank">
+					{% else %}
+					<a href="/events/view/{{ list.id }}" target="_blank">
+					{% endif %}
+						<span class="thumb">
+							{% if list.thumnail_image %}
+							<img src="https://inthe-movie.com/files/events/{{ list.thumnail_image }}"  width="160" height="98" alt="{{ list.subject }}" />
+							{% else %}
+							<img src="/images/no15898.png"  width="160" height="98" alt="{{ list.subject }}" style="border:1px solid #cccccc;"/>
+							{% endif %}
+						</span>
+						<strong>{{ list.subject }}</strong>
+					</a>
+					<dl>
+						<dt style="width:50px;">일시</dt>
+						<dd style="width:220px;">{{ list.date }}</dd>
+						<dt style="width:50px;">인원</dt>
+						<dd style="width:220px;">{{ list.people }}</dd>
+						<dt style="width:50px;">장소</dt>
+						<dd style="width:220px;">{{ list.place }}</dd>
+						<dt style="width:50px;">발표</dt>
+						<dd  style="width:220px;">{{ list.announce }}</dd>
+					</dl>
+				</li>
+			{% else %}
+				<li style="padding:80px 0px;" class="tCenter">
+					진행중인 이벤트가 없습니다.
+				</li>
+			{% endfor %}
+			</ul>
+		</div>	
+	</div>
+</div>
+{%  endblock %}

@@ -1,0 +1,30 @@
+{%  extends 'admin_base.html' %}
+{%   block content %}
+<h3>이벤트 블럭 리스트</h3>
+<table class="review_table" width="80%">
+	<thead>
+	<tr>
+		<th>번호</th>
+		<th>아이디</th>
+		<th>이름</th>
+		<th>닉네임</th>
+		<th>휴대폰번호</th>
+		<th>가입일</th>
+		<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+{% for panalty in panalties %}
+	<tr>
+		<td>{{ loop.index }}</td>
+		<td>{{ panalty.user.user_id }}</td>
+		<td>{{ panalty.user.name }}</td>
+		<td>{{ panalty.user.nick_name }}</td>
+		<td>{{ panalty.user.mobile_phone }}</td>
+		<td>{{ panalty.create_date }}</td>
+		<td><a href="/inthe-movie/admin/member/block/{{ panalty.id }}">삭제</a></td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+{%  endblock %}

@@ -1,0 +1,12 @@
+Jinja2
+PIL
+feedparser
+gdata
+urllib2
+oauth2
+psycopg2
+simplejson
+tweepy
+BeautifulSoup
+flickrapi
+south

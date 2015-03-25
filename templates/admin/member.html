@@ -1,0 +1,52 @@
+{%  extends 'admin_base.html' %}
+{%   block content %}
+<form method="get" action=".">
+<input type="hidden" name="page" id="page" value="{{ page }}" />
+<div>
+	<span>
+		<select name="search_type" id="search_type">
+			<option value="user_id">아이디</option>
+			<option value="name">이름</option>
+			<option value="nick_name">별명</option>
+		</select>
+	</span>
+	<span>
+		<input type="text" name="keyword" id="keyword" />
+	</span>
+	<span>
+		<input type="submit" value="검색" />
+	</span>
+	<span style="margin-left:10px;">
+		<a href="/inthe-movie/admin/member/block">이벤트 블럭 리스트</a>
+	</span>
+</div>
+</form>
+<table class="review_table" width="80%">
+	<thead>
+	<tr>
+		<th>번호</th>
+		<th>아이디</th>
+		<th>이름</th>
+		<th>별명</th>
+		<th>가입일</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+{% for member in member_info.object_list %}
+	<tr>
+		<td>{{ member.id }}</td>
+		<td><a href="/inthe-movie/admin/member/view?id={{ member.id }}">{{ member.user_id }}</a></td>
+		<td><a href="/inthe-movie/admin/member/view?id={{ member.id }}">{{ member.name }}</a></td>
+		<td><a href="/inthe-movie/admin/member/view?id={{ member.id }}">{{ member.nick_name }}</a></td>
+		<td><a href="/inthe-movie/admin/member/view?id={{ member.id }}">{{ member.reg_date }}</a></td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+<dl>
+	<dt class="page_area">
+	{% include '/admin/paging.html' %}
+	</dt>
+</dl>
+{%  endblock %}

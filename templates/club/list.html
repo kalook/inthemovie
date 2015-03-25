@@ -1,0 +1,59 @@
+{%  extends 'base.html' %}
+{%  block title %}  Club :: {{ board.title }} {% endblock %}
+{%  block sub_menu %} 
+    <ul class="club-menu">
+        <li><a href="/club/">클럽 홈</a></li>
+        <li><a href="/club/reporter/">기자단리뷰</a></li>
+        <li><a href="/club/movie/">영화리뷰</a></li>
+        <li><a href="/club/performance/">공연리뷰</a></li>
+        <li><a href="/club/attraction/">극장주변명소</a></li>
+        <li><a href="/club/free/">이러쿵저러쿵</a></li>
+        <li><a href="/club/offmeeting/">오프모임</a></li>
+    </ul> 
+{% endblock %}
+{%  block content %}
+    <h2>{{ board.title }}</h2>
+	<table style="width:700px;">
+	   <col id="postTitle" width="70%" />
+	   <col id="postName"  width="10%" />
+	   <col id="postName"  width="3%" />
+	   <col id="postDate"  width="10%" />
+		<thead>
+		<tr>
+			<th>title</th>
+			<th>name</th>
+			<th>hit</th>
+			<th>date</th>
+		</tr>	
+		</thead>
+		<tbody>
+		{% for post in posts.object_list %} 
+		<tr>
+			<td><a href="/club/{{ code }}/post/{{ post.id }}">{{ post.title }}</a></td>
+			<td>{{ post.user.nick_name }}</td>
+			<td>{{ post.readed_count }}</td>
+			<td>{{ post.reg_date|datetimeformat('%Y-%m-%d') }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if posts.has_previous %}
+			    <a href="/club/{{ code }}/page/1">start</a>
+	            <a href="/club/{{ code }}/page/{{ posts.previous_page_number }}">previous</a>
+	        {% endif %}
+	
+	        <span class="current">
+	        	{% for p in posts.paginator.page_range %}
+				<a href="/club/{{ code }}/page/{{ p }}">{{ p }}</a>&nbsp;
+				{% endfor %}
+	        </span>
+	        {% if posts.has_next %}
+	            <a href="/club/{{ code }}/page/{{ posts.next_page_number }}">next</a>
+				<a href="/club/{{ code }}/page/{{ posts.paginator.num_pages }}">end</a>
+	        {% endif %}
+	    </span>
+	</div>
+	<a href="/club/{{ code }}/post/">포스팅</a>
+{%  endblock %}

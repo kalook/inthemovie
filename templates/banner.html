@@ -1,0 +1,7 @@
+{% if request.GET['type'] == 'right_top' %}
+document.write('{{ main_banner.right_top }}');
+{% elif request.GET['type'] == 'right_down' %}
+document.write('{{ main_banner.right_down }}');
+{% elif request.GET['type'] == 'main' %}
+document.write('{{ main_banner.main }}');
+{% endif %}

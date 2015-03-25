@@ -1,0 +1,57 @@
+{%  extends 'base.html' %}
+{%  block title %}  마이페이지 :: 포인트 {% endblock %}
+{%  block content %}
+{{ "member.message" | get_lnb(session)}}
+
+<h1 class="page_title">
+</h1>
+
+<div class="mypage_point">
+<div class="point_menu">
+	<dl>
+		<dt><span class="red">{{ session.nick_name }}</span>({{ session.user_id }})님의 쪽지공간</dt>
+		<dd><div class="point_button{% if message_article.recipient_id == session.user_id %} select{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=recive">받은쪽지함</a></div></dd>
+		<dd><div class="point_button{% if message_article.sender_id == session.user_id %} select{% endif %}"><a href="/user/{{ session.user_id }}/message/?type=send">보낸쪽지함</a></div></dd>
+		<dd><div class="point_button"><a href="/user/{{ session.user_id }}/message/post">쪽지쓰기</a></div></dd>
+	</dl>
+</div>
+<div class="point_table_area"> 
+	<table class="point_table">
+		<thead>
+		</thead>
+		<tbody class="message_view">
+			<tr>
+				<th>보낸 사람</th>
+				<td><strong>{{ message_article.sender_id }}</strong> {{ message_article.send_date|datetimeformat('%Y.%m.%d, %H %m') }}</td>
+			</tr>
+			<tr>
+				<th>받는 사람</th>
+				<td><strong>{{ message_article.recipient_id }}</strong></td>
+			</tr>
+			<tr class="point_bottom">
+				<td colspan="2" class="message_area">
+					<p>
+						{{ message_article.content|nl2br() }}
+					</p>
+				</td>
+			</tr>
+			
+		</tbody>
+		<tfoot>
+			<tr class="no_border bt_area">
+				<td colspan="2" >
+				<input type="button" class="share_list icon black_border left" value="목록" onclick="document.location.href='/user/{{ session.user_id }}/message';" />
+				<input type="button" class="bt_up icon black_border left" value="윗글"      onclick="document.location.href='';" />
+				<input type="button" class="bt_down icon black_border left" value="아랫글"   onclick="document.location.href='';" />
+				<input type="button" class="bt_delete icon right" value="삭제" onclick="document.location.href='/user/{{ session.user_id }}/message/delete/{{ message_article.id }}';" />
+				</td>
+			</tr>
+			
+		</tfoot>
+	</table>
+</div>
+{%  endblock %}
+
+
+
+

@@ -1,0 +1,27 @@
+<div id="sub_nb">
+	<ul>
+		<li{% if c == 'available' %} class="selected"{% endif %}>
+			<a href="/events/" class="rollover">
+				<img src="/images/event/menu_available.png" alt="진행중인 이벤트" />
+				<img src="/images/event/menu_available_on.png" alt="진행중인 이벤트" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'announce' %} class="selected"{% endif %}>
+			<a href="/club/announce" class="rollover">
+				<img src="/images/event/menu_announce.png" alt="당첨자 발표" />
+				<img src="/images/event/menu_announce_on.png" alt="당첨자 발표" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'ticket' %} class="selected"{% endif %}>
+			<a href="/club/ticket" class="rollover">
+				<img src="/images/event/menu_ticket.png" alt="벼락표 나눔터" />
+				<img src="/images/event/menu_ticket_on.png" alt="벼락표 나눔터" class="over" />
+			</a>
+		</li>
+	</ul>
+	<div class="b_line">
+		<div>&nbsp;</div>
+	</div>
+</div>

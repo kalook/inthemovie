@@ -1,0 +1,15 @@
+{%  extends 'hotmovie_base.html' %}
+{%  block title %} hotmovie {% endblock %}
+{%  block sub_menu %} 
+    <ul id="sub">
+        <li><a href="/{{ title }}">홈</a></li>
+        <li><a href="/{{ title }}/video">동영상</a></li>
+        <li><a href="/{{ title }}/photo">포토</a></li>
+        <li><a href="/{{ title }}/review">리뷰</a></li>
+        <li><a href="/{{ title }}/blog">블로그</a></li>
+        <li><a href="/{{ title }}/vlaah">+- 취향토크</a></li>
+    </ul>
+{% endblock %}
+{%   block content %}
+    {{ title }} => 리뷰
+{%  endblock %}

@@ -1,0 +1,92 @@
+{%  extends 'base.html' %}
+{%  block title %} 덕스클럽 {% endblock %}
+{%  block external %}
+    <link href="/script/smarteditor/css/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/script/smarteditor/js/HuskyEZCreator.js"></script>
+{% endblock %}
+{%   block content %}
+
+{{ "club.home"|get_lnb() }}
+
+{% include '/club/club_title.html' %}
+
+{% include '/common/banner_right.html' %}
+
+<div class="event_table_area">
+	<table class="review_table event_share_table minus_ten_bottom">
+	<tr>
+		<td class="subject red align_left"><strong class="event_bold">{{ post.title }}</strong></td>
+	</tr>
+	<tr>
+		<td>
+			<span class="left"><input type="button" name="twitter" class="bt_twitter" onClick="location.href='http://naver.com'"/><input type="button" name="m2day" class="bt_m2day"/></span>
+			<span class="right">글쓴이 : {{ post.user.nick_name }} 날짜:{{ post.reg_date|datetimeformat('%Y.%m.%d') }} 조회:{{ post.readed_count }}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="align_left">
+			<p>{{ post.content }}</p>
+		</td>
+	</tr>
+	
+	</table>
+	<div class="share_table_button">
+		<span class="left bt_align">
+			<input type="button" class="share_list icon black_border" onclick="document.location.href='/club/{{ code }}/delete/{{ post.id }}';" />
+			<input type="button" class="bt_up icon black_border"/>
+			<input type="button" class="bt_down icon black_border"/>
+			
+		</span>
+		<span class="right bt_margin">
+			{% if session.user_id == post.user.user_id %}
+			<input type="button" class="bt_delete icon black_border" onclick="document.location.href='/club/{{ code }}/delete/{{ post.id }}';" />
+			<input type="button" class="bt_modify icon black_border" onclick="document.location.href='/club/{{ code }}/edit/{{ post.id }}';" />
+			{% endif %}
+			<input type="button" class="bt_write icon realblack_border" onclick="document.location.href='/club/{{ code }}/post';" />
+		</span>			
+	</div>	
+	
+	<form action="" method="post">
+	<input type="hidden" name="code" id="code" value="{{ code }}" />
+	<input type="hidden" name="idx" id="idx" value="{{ post.id }}" />
+	<table class="review_table gray_border comment_top_margin">
+		<tr>
+			<td class="comment_text">
+				<span class="comment_text_area event_bold">댓글</span>
+				<input type="text" id="content" name="content" class="comment_input_text"/>
+				<input type="button" id="comment_submit" class="share_commit black_border icon right comment_commit_margin"/>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<div id="comment_list" style="clear:both;margin-bottom:30px;"></div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+		$("#comment_submit").click(function() {
+			var content = $('#content').val();
+			if(content.length<1) {
+				alert('댓글내용을 입력하세요.');
+				$('#content').focus();
+				return false;
+			}
+			var data = {
+				code	: $("#code").val(),
+				idx		: $("#idx").val(),
+				content		: $("#content").val(),
+			};
+			$.post("/club/comment/request", data, function (result) {
+				if(result != "false") {
+					$("#comment_list").load("/club/comment/{{ code }}/{{ post.id }}/");
+					$('#content').val('');
+					$('#content').focus();
+				}
+				else {
+					alert("댓글등록에 실패했습니다.");
+				}
+			});
+		});
+	});
+</script>
+{%  endblock %}

@@ -1,0 +1,190 @@
+{%  extends 'hotmovie_base.html' %}
+{%  block title %} hotmovie {% endblock %}
+{%  block sub_menu %} 
+{% endblock %}
+
+{% block external %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/social_comment.css" />
+<script>
+function load_sns(type){
+	$("#social_wrap").addClass("loading");
+	$.ajax({
+		url:"/{{url_title}}/sns/"+type,
+		success:function(data){
+			$("#social_wrap").removeClass("loading");
+			$("#social_wrap").html(data);
+		}	
+	});
+}
+var sns_lasttime="";
+function load_mixsns(){
+	$.ajax({
+		url:"/{{url_title}}/sns/mixsns?date="+sns_lasttime,
+		success:function(data){
+			$(".sns_realtime ul").removeClass("loading");
+			$(".sns_realtime ul").prepend(data);
+			sns_lasttime=$(".sns_realtime li:first-child").attr("data")
+			if ($(".sns_realtime li").size() > 7){
+				for(var i = $(".sns_realtime li").size(); i >5 ; i--){
+					$(".sns_realtime li:eq("+i+")").remove()
+				}
+			}
+			if ($(".sns_realtime li.slidedown").size() > 0){
+				$(".sns_realtime li.slidedown").slideDown()
+				$(".sns_realtime li.slidedown").removeClass("slidedown");
+			}
+			setTimeout(load_mixsns,3000);
+		},
+		error:function(){
+			setTimeout(load_mixsns,3000);
+		}
+	});
+}
+
+
+$(function(){
+
+	$(".sns_realtime ul").addClass("loading");
+	load_mixsns();
+	
+	$("#sns_tab a").click(function(){
+		$("#social_wrap").html("");
+		$("#sns_tab li").removeClass("selected");
+		$(this).parent().addClass("selected");
+		load_sns($(this).attr("data-set"));
+		return false;
+	});
+	load_sns("twitter");
+	
+});
+
+
+
+</script>
+ <meta property="og:title" content="인더무비" /> 
+
+{% endblock %}
+ 
+{% block content %}
+
+{% include '/movies/hotmovie_top_area.html' %}
+
+<div class="basic_gap">&nbsp;</div>
+<style>
+	.img_box				{ width:158px; height:98px; overflow:hidden; border:1px solid #ccc; background:#efefef; }
+	.img_box.vertical		{ display: table-block; #position:relative; }
+	.img_box.vertical div	{ width:158px; display: table-cell; vertical-align: middle; #position:absolute; #top:50%; }
+	.img_box.vertical img	{ width:158px; #position:relative; #top:-50%; }
+	.img_box.horizontal		{ text-align:center; }
+	.img_box.horizontal img	{ height:98px; }
+</style>
+
+<div id="page_body">
+	<div class="main_body">
+	
+		<div class="sub_title">
+			<h3><img src="/images/hotmovie/hotmovie_title_video.png" alt="동영상" /></h3>
+			<span class="fr"><a href="./video/"><img src="/images/title_more.png" alt="more" /></a></span>
+			
+		</div>
+		<div class="clear">
+			</div>
+		<div class="latest_item_col" >
+			<ul>
+				{% if vod_list %}
+					{% for vod in vod_list %}
+					<li>
+						<a {{ vod|get_video_attr() }} href="/link_proxy/?u={{ vod.swf_url|base64encode() }}"   title="{{ vod.subject }}"  target="_blank">
+							<span class="thumb"><img src="/image_proxy/?u={{ vod.content_url|base64encode() }}" alt="{{ vod.subject }}" /></span>
+							<p>{{ vod.subject|strip_tags()|strrepl(17) }}</p>
+						</a>
+					</li>
+					{% endfor %}
+				{% else %}
+					<li><span>등록된 내용이 없습니다.</span></li>
+				{% endif %}
+			</ul>
+		</div>
+		<div class="sub_title">
+			<h3><img src="/images/hotmovie/hotmovie_title_photo.png" alt="포토" /></h3>
+			<span class="fr"><a href="./photo/"><img src="/images/title_more.png" alt="more" /></a></span>
+		</div>
+		<div class="clear">
+			</div>
+		<div class="latest_item_col" >
+			<ul>
+				{% if photo_list %}
+					{% for photo in photo_list %}
+						<li>
+							<a class="single_image" href="/link_proxy/?u={{ photo.content_url|base64encode() }}"  title="{{ photo.subject }}" target="_blank">
+								<span class="thumb"><img src="/image_proxy/?u={{ photo.link_url|base64encode() }}" alt="{{ photo.subject }}" /></span>
+							</a>
+						</li>
+					{% endfor %}
+				{% else %}
+					<li><span >등록된 내용이 없습니다.</span></li>
+				{% endif %}
+			</ul>
+		</div>
+		<div class="clear">
+		</div>
+	
+		<div class="sub_wrap fl">
+			<div class="sub_title" style="margin:0px">
+				<h3><img src="/images/hotmovie/hotmovie_title_blog.png" alt="/{{ title }}/blog"></h3>
+				<span class="fr"><a href="./blog/"><img src="/images/title_more.png" alt="more" /></a></span>
+				<div class="clear">
+				</div>
+			</div>
+			<div class="front_notice">
+				<ul>
+				{% for blog in blog_list %}
+					<li style="margin-bottom:10px;">
+						<a href="/link_proxy/?u={{ blog.link_url|base64encode() }}" target="_blank">{{ blog.subject[:25] }}</a>						
+					</li>
+					
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="sub_wrap fr">
+			<div class="sub_title">
+				<h3><img src="/images/hotmovie/hotmovie_title_news.png" alt="/{{ title }}/news"></h3>
+				<span class="fr"><a href="./news/"><img src="/images/title_more.png" alt="more" /></a></span>
+				
+			</div>
+			<div class="front_notice">
+				<ul>
+				{% for news in news_info %}
+					<li style="margin-bottom:10px;">
+						<a href="/link_proxy/?u={{ news.link_url|base64encode() }}" target="_blank">{{ news.subject[:25] }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+		
+		<div class="clear">
+		</div>
+		<div id="sns_wrap">
+			<div class="sub_title">
+				<h3><img src="/images/hotmovie/hotmovie_title_movietalk.png" alt="/{{ title }}/vlaah"></h3>
+			</div>
+			<div class="clear">
+			</div>
+			<ul id="sns_tab" class="tab_menu">
+				<li class="selected"><a href="#" class="sns_tab" data-set="twitter">트위터</a></li>
+				<li><a href="#" class="sns_tab" data-set="me2day" >미투데이</a></li>
+				<li class="clear">
+				</li>
+			</ul>
+			<div class="social_wrap loading" id="social_wrap">
+			</div>
+		</div>
+
+	</div>
+	<div id="right_banners" class="aside">{% include '/common/banner_right.html' %}</div>
+	<div class="clear">
+	</div>
+</div>
+{%  endblock %}

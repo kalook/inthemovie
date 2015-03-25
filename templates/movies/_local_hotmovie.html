@@ -1,0 +1,53 @@
+<div id="sub_nb">
+	<div class="fr">
+		<a href="/"><img src="/images/etc/hotmovie_menu_default.png" alt="intheMovie Home" /></a>
+	</div>
+	<ul>
+		<li{% if c == '' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}" class="rollover">
+				<img src="/images/etc/hotmovie_menu_home.png" alt="홈" />
+				<img src="/images/etc/hotmovie_menu_home_on.png" alt="홈" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'video' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}/video" class="rollover">
+				<img src="/images/etc/hotmovie_menu_video.png" alt="동영상" />
+				<img src="/images/etc/hotmovie_menu_video_on.png" alt="동영상" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'photo' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}/photo" class="rollover">
+				<img src="/images/etc/hotmovie_menu_photo.png" alt="포토" />
+				<img src="/images/etc/hotmovie_menu_photo_on.png" alt="포토" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'news' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}/news" class="rollover">
+				<img src="/images/etc/hotmovie_menu_news.png" alt="뉴스" />
+				<img src="/images/etc/hotmovie_menu_news_on.png" alt="뉴스" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'blog' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}/blog" class="rollover">
+				<img src="/images/etc/hotmovie_menu_blog.png" alt="블로그" />
+				<img src="/images/etc/hotmovie_menu_blog_on.png" alt="블로그" class="over" />
+			</a>
+		</li>
+		<li class="gap">&nbsp;</li>
+		<li{% if c == 'vlaah' %} class="selected"{% endif %}>
+			<a href="/{{ movie_info.title_url }}/vlaah" class="rollover">
+				<img src="/images/etc/hotmovie_menu_vlaah.png" alt="동영상" />
+				<img src="/images/etc/hotmovie_menu_vlaah_on.png" alt="동영상" class="over" />
+			</a>
+		</li>
+		<li class="clear">
+		</li>
+	</ul>
+	<div class="b_line">
+		<div>&nbsp;</div>
+	</div>
+</div>

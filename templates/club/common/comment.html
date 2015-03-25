@@ -1,0 +1,40 @@
+<div class="cb_module cb_fluid">
+	<!-- Comment List -->
+	<div class="cb_lstcomment">
+	{% for list in comment_list %}
+		<ul>
+		<li class="cb_thumb_off">
+			<div class="cb_comment_area">
+				<div class="cb_info_area">
+					<div class="cb_section">
+						<span class="cb_nick_name" style="color:#2276bb"><b>{{ list.user.nick_name }}</b></span>
+						
+						<span class="cb_date">{{ list.reg_date|datetimeformat('%Y.%m.%d') }}</span>
+					</div>
+					<div class="cb_section2">
+					{% if session.user_id == list.user.user_id %}
+<!-- 					<span class="cb_nobar"><a href="#{{ list.id }}" id="{{ list.id }}" onclick="edit_comment('{{ list.board.code }}',{{ list.id }});"><img src="/images/pencil.png" alt="수정" /></a></span> -->
+					<span class="cb_nobar"><a href="#{{ list.id }}" id="{{ list.id }}" onclick="delete_comment('{{ list.board.code }}',{{ list.id }});"><img src="/images/minus.png"alt="삭제" /></a></span>
+					{% endif %}	
+
+						
+					</div>
+				</div>
+				<div class="cb_dsc_comment">
+					<p class="cb_dsc" style="word-break:break-all">
+						{{ list.comment }}
+					</p>
+					
+				</div>
+				<!-- 숨김처리
+				<div class="cb_info_area2">
+					<a href="#">3개</a>의 답글이 있습니다.
+				</div>
+				//숨김처리 -->
+			</div>
+		</li>
+		</ul>
+		{% endfor %}
+	</div>
+	<!-- //Comment List -->
+	</div>

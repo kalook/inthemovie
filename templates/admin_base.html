@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="google-site-verification" content="JplAFbei_OcjLfkE7CWr71i_xO0B0vh6J-PGniN6Vjc" />
+	<title>inthe-movie.com 인더무비 :: {% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheet/common.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheet/admin.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheet/jquery.thumbs.css" />
+    <script type="text/javascript" src="/script/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/script/jquery.thumbs.js"></script>
+    <script type="text/javascript" src="/script/application.js"></script>
+	{% block external %}{% endblock %}
+</head>
+<body>
+
+	<div id="wrap">
+		<div id="header">
+			<div class="fl"><a href="/"><img src="/images/logo_x.png" id="logos" /></a></div>
+			<div class="quick_nb">
+				<ul>
+					{% if session.user_id %}
+					<li>
+						{{ session.nick_name }} 님
+						{% if session.is_admin == 'yes' %}
+							<a href="/inthe-movie/admin">(어드민)</a>
+						{% endif %}
+					</li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/user/{{ session.user_id }}"><img src="/images/top_mypage.png" alt="마이페이지" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/logout"><img src="/images/top_logout.png" alt="로그아웃" /></a></li>
+					{% else %}
+					<li><a href="/login?url={{ request.META['PATH_INFO']|urlencode }}"><img src="/images/top_login.png" alt="로그인" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/find"><img src="/images/top_idpassword_search.png" alt="아이디비밀번호찾기" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/join"><img src="/images/top_join.png" alt="회원가입" /></a></li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="fr">
+				<form action="/" method="get">
+					<div class="search">
+						<label for="query">영화검색</label>
+						<input type="text" id="query" name="q" class="search_txt" />
+						<input type="submit" value="" class="search_btn" />
+					</div>
+				</form>
+			</div>
+			
+			<div class="global_nb">
+				<ul>
+		            <li><a href="/inthe-movie/admin/member/">회원관리</a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/inthe-movie/admin/email/">메일발송</a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/inthe-movie/admin/hotmovie/">핫무비관리</a></li>
+					<li class="gap">&nbsp;</li>
+		            <li><a href="/inthe-movie/admin/event/">이벤트관리</a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/inthe-movie/admin/club/">게시판관리</a></li>
+					<li class="gap">&nbsp;</li>
+		            <li><a href="/inthe-movie/admin/ad/">광고관리</a></li>
+				</ul>
+			</div>
+			
+			<div class="b_line">
+				<div>&nbsp;</div>
+			</div>
+			
+			<div class="clear">
+			</div>
+		</div>
+		
+		<div id="content-box">
+			<div id="content">
+				<div class="basic_gap">&nbsp;</div>
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+		
+		<div id="footer" style="display:block;margin-top:30px;">
+			<div class="link_menu">
+				<ul>
+					<li><a href="http://inthe-movie.tistory.com" target="_blank"><img src="/images/footer_inthemovie_info.png" alt="intheMovie소개" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/private"><img src="/images/footer_individual_information.png" alt="개인정보취급방침" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="/tos"><img src="/images/footer_use_information.png" alt="이용약관" /></a></li>
+					<li class="gap">&nbsp;</li>
+					<li><a href="mailto:contact@inthe-movie.com"><img src="/images/footer_advertice.png" alt="광고 및 제휴안내" /></a></li>
+				</ul>
+			</div>
+			<div class="copyright">
+				<span>Copyright ⓒ inthemovie co LTD. ALL RIGHTS RESERVED </span>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-32878418-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+</body>
+</html>

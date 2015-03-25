@@ -1,0 +1,10 @@
+{%  extends 'base.html' %}
+{%  block title %} {% endblock %}
+{%  block sub_menu %} {% endblock %}
+{%   block content %}
+
+{% for movie in movie_list %}
+	{{ movie.title_kor }}<br /><br />
+{% endfor%}
+
+{%  endblock %}
